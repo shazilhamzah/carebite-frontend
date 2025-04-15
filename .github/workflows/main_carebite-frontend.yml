@@ -186,7 +186,7 @@ jobs:
           cp -R public/* .next/standalone/public/
           cp package.json .next/standalone/
           cp package-lock.json .next/standalone/
-          cp next.config.js .next/standalone/
+          cp next.config.ts .next/standalone/
           cp -R .next/standalone/node_modules .next/standalone/
 
       - name: Upload artifact
