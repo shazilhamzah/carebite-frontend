@@ -22,7 +22,7 @@ export default function LoginPage() {
             <div className="w-full max-w-md">
                 <div className="mb-6 flex flex-col items-center text-center">
                     <div className="mb-2 flex h-16 w-16 items-center justify-center rounded-full bg-green-100">
-                        <img src="/Logo.png" alt="Carebite Logo" className="h-8 w-8" />
+                        <img src="/images/logo.png" alt="Carebite Logo" className="h-8 w-8" />
                     </div>
                     <h1 className="text-2xl font-bold text-slate-900">Carebite</h1>
                     {/* <p className="text-slate-600">Management System</p> */}
