@@ -1,3 +1,77 @@
+# # # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
+# # # More GitHub Actions for Azure: https://github.com/Azure/actions
+
+# # name: Build and deploy Node.js app to Azure Web App - carebite-frontend
+
+# # on:
+# #   push:
+# #     branches:
+# #       - main
+# #   workflow_dispatch:
+
+# # jobs:
+# #   build:
+# #     runs-on: ubuntu-latest
+# #     permissions:
+# #       contents: read #This is required for actions/checkout
+
+# #     steps:
+# #       - uses: actions/checkout@v4
+
+# #       - name: Set up Node.js version
+# #         uses: actions/setup-node@v3
+# #         with:
+# #           node-version: '22.x'
+
+# #       - name: npm install, build, and test
+# #         run: |
+# #           npm install
+# #           npm run build --if-present
+# #           npm run test --if-present
+
+# #       - name: Zip artifact for deployment
+# #         run: zip release.zip ./* -r
+
+# #       - name: Upload artifact for deployment job
+# #         uses: actions/upload-artifact@v4
+# #         with:
+# #           name: node-app
+# #           path: release.zip
+
+# #   deploy:
+# #     runs-on: ubuntu-latest
+# #     needs: build
+# #     environment:
+# #       name: 'Production'
+# #       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+# #     permissions:
+# #       id-token: write #This is required for requesting the JWT
+# #       contents: read #This is required for actions/checkout
+
+# #     steps:
+# #       - name: Download artifact from build job
+# #         uses: actions/download-artifact@v4
+# #         with:
+# #           name: node-app
+
+# #       - name: Unzip artifact for deployment
+# #         run: unzip release.zip
+
+# #       - name: Login to Azure
+# #         uses: azure/login@v2
+# #         with:
+# #           client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_5688716DEEAF430CBC575377A3CA9296 }}
+# #           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_D21814BE0829417CA6A0780CACD99F1F }}
+# #           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_94B9715CB9B2407F9C0946ABCBF3C9EE }}
+
+# #       - name: 'Deploy to Azure Web App'
+# #         id: deploy-to-webapp
+# #         uses: azure/webapps-deploy@v3
+# #         with:
+# #           app-name: 'carebite-frontend'
+# #           slot-name: 'Production'
+# #           package: .
+
 # # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # # More GitHub Actions for Azure: https://github.com/Azure/actions
 
@@ -13,7 +87,7 @@
 #   build:
 #     runs-on: ubuntu-latest
 #     permissions:
-#       contents: read #This is required for actions/checkout
+#       contents: read # Required for actions/checkout
 
 #     steps:
 #       - uses: actions/checkout@v4
@@ -21,41 +95,42 @@
 #       - name: Set up Node.js version
 #         uses: actions/setup-node@v3
 #         with:
-#           node-version: '22.x'
+#           node-version: "22.x"
 
-#       - name: npm install, build, and test
+#       - name: Install dependencies, build, and test
 #         run: |
 #           npm install
 #           npm run build --if-present
 #           npm run test --if-present
 
-#       - name: Zip artifact for deployment
-#         run: zip release.zip ./* -r
+#       - name: Copy static files into standalone
+#         run: |
+#           mkdir -p .next/standalone/.next/static
+#           cp -R .next/static .next/standalone/.next/static
 
 #       - name: Upload artifact for deployment job
 #         uses: actions/upload-artifact@v4
 #         with:
 #           name: node-app
-#           path: release.zip
+#           path: .next/standalone
+#           include-hidden-files: true
 
 #   deploy:
 #     runs-on: ubuntu-latest
 #     needs: build
 #     environment:
-#       name: 'Production'
+#       name: "Production"
 #       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
 #     permissions:
-#       id-token: write #This is required for requesting the JWT
-#       contents: read #This is required for actions/checkout
+#       id-token: write
+#       contents: read
 
 #     steps:
 #       - name: Download artifact from build job
 #         uses: actions/download-artifact@v4
 #         with:
 #           name: node-app
-
-#       - name: Unzip artifact for deployment
-#         run: unzip release.zip
+#           path: ./app
 
 #       - name: Login to Azure
 #         uses: azure/login@v2
@@ -64,16 +139,13 @@
 #           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_D21814BE0829417CA6A0780CACD99F1F }}
 #           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_94B9715CB9B2407F9C0946ABCBF3C9EE }}
 
-#       - name: 'Deploy to Azure Web App'
+#       - name: "Deploy to Azure Web App"
 #         id: deploy-to-webapp
 #         uses: azure/webapps-deploy@v3
 #         with:
-#           app-name: 'carebite-frontend'
-#           slot-name: 'Production'
-#           package: .
-
-# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
-# More GitHub Actions for Azure: https://github.com/Azure/actions
+#           app-name: "carebite-frontend"
+#           slot-name: "Production"
+#           package: ./app
 
 name: Build and deploy Node.js app to Azure Web App - carebite-frontend
 
@@ -87,33 +159,42 @@ jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
-      contents: read # Required for actions/checkout
+      contents: read
 
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up Node.js version
+      - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: "22.x"
+          cache: "npm"
 
-      - name: Install dependencies, build, and test
-        run: |
-          npm install
-          npm run build --if-present
-          npm run test --if-present
+      - name: Install dependencies
+        run: npm ci
 
-      - name: Copy static files into standalone
+      - name: Build project
         run: |
-          mkdir -p .next/standalone/.next/static
+          npm run build
+          ls -la .next/static  # Verify build output
+
+      - name: Prepare standalone deployment
+        run: |
+          # Copy necessary files for standalone mode
+          mkdir -p .next/standalone/public
           cp -R .next/static .next/standalone/.next/static
+          cp -R public/* .next/standalone/public/
+          cp package.json .next/standalone/
+          cp package-lock.json .next/standalone/
+          cp next.config.js .next/standalone/
+          cp -R .next/standalone/node_modules .next/standalone/
 
-      - name: Upload artifact for deployment job
+      - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: node-app
           path: .next/standalone
-          include-hidden-files: true
+          retention-days: 1
 
   deploy:
     runs-on: ubuntu-latest
@@ -126,11 +207,11 @@ jobs:
       contents: read
 
     steps:
-      - name: Download artifact from build job
+      - name: Download artifact
         uses: actions/download-artifact@v4
         with:
           name: node-app
-          path: ./app
+          path: ./deployment-package
 
       - name: Login to Azure
         uses: azure/login@v2
@@ -139,10 +220,10 @@ jobs:
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_D21814BE0829417CA6A0780CACD99F1F }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_94B9715CB9B2407F9C0946ABCBF3C9EE }}
 
-      - name: "Deploy to Azure Web App"
+      - name: Deploy to Azure
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
           app-name: "carebite-frontend"
           slot-name: "Production"
-          package: ./app
+          package: ./deployment-package
