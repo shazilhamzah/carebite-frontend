@@ -33,8 +33,8 @@ function Home() {
         children: "Hello, World!"
     }, void 0, false, {
         fileName: "[project]/src/app/page.tsx",
-        lineNumber: 4,
-        columnNumber: 10
+        lineNumber: 6,
+        columnNumber: 3
     }, this);
 }
 }}),

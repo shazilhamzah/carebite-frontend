@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 7, "column": 0}, "map": {"version":3,"sources":["file://C%3A/Users/Afzaal%20Hamzah/OneDrive/Documents/Carebite/frontend/src/app/page.tsx"],"sourcesContent":["\"use client\";\nimport \"@/app/globals.css\";\nimport { useRouter } from \"next/router\";\n\nexport default function Home() {\n  const router = useRouter();\n\n  return (\n    <>\n      <h1>Hello, World!</h1>\n      <button className=\"btn\" onClick={() => router.push(\"/dashboard\")}>\n        Go to Dashboard\n      </button>\n    </>\n  );\n}\n"],"names":[],"mappings":";;;;AAEA;;;AAFA;;;AAIe,SAAS;;IACtB,MAAM,SAAS,CAAA,GAAA,iIAAA,CAAA,YAAS,AAAD;IAEvB,qBACE;;0BACE,6LAAC;0BAAG;;;;;;0BACJ,6LAAC;gBAAO,WAAU;gBAAM,SAAS,IAAM,OAAO,IAAI,CAAC;0BAAe;;;;;;;;AAKxE;GAXwB;;QACP,iIAAA,CAAA,YAAS;;;KADF","debugId":null}}]
+}
