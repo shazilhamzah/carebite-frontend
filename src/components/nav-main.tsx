@@ -10,6 +10,8 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
+import type { ForwardRefExoticComponent, RefAttributes } from "react";
+import type { SVGProps } from "react";
 
 export function NavMain({
   items,
@@ -17,7 +19,9 @@ export function NavMain({
   items: {
     title: string;
     url: string;
-    icon?: Icon;
+    icon?: ForwardRefExoticComponent<
+      SVGProps<SVGSVGElement> & RefAttributes<SVGSVGElement>
+    >;
   }[];
 }) {
   return (
