@@ -25,7 +25,7 @@ import {
 } from "@tabler/icons-react";
 import { ChefHat, Coins, Hospital, PersonStanding } from "lucide-react";
 
-type UserRole = "worker" | "gmHosp" | "gmCord" | "GS" | "Donors" | "ADM" | "Supervisor" | "etc.";
+type UserRole = "worker" | "gmHosp" | "gmCord" | "GS" | "Donors" | "ADM" | "Supervisor" | "gm" | "etc.";
 
 export function getNavData(role: UserRole) {
   switch (role) {
