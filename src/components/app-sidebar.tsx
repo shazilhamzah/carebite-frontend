@@ -182,8 +182,10 @@ const data = {
 //   );
 // }
 
+type UserRole = "worker" | "gm" | "etc.";
+
 export function AppSidebar({
-  userRole = "viewer",
+  userRole = "worker",
   ...props
 }: { userRole: UserRole } & React.ComponentProps<typeof Sidebar>) {
   const data = getNavData(userRole);
