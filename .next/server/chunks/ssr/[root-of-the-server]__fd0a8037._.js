@@ -1588,6 +1588,61 @@ function NavDocuments({ items }) {
 
 var { g: global, __dirname } = __turbopack_context__;
 {
+// "use client";
+// import { IconCirclePlusFilled, IconMail, type IconProps } from "@tabler/icons-react";
+// import { Button } from "@/components/ui/button";
+// import {
+//   SidebarGroup,
+//   SidebarGroupContent,
+//   SidebarMenu,
+//   SidebarMenuButton,
+//   SidebarMenuItem,
+// } from "@/components/ui/sidebar";
+// export function NavMain({
+//   items,
+// }: {
+//   items: {
+//     title: string;
+//     url: string;
+//     icon?: React.ComponentType<IconProps>; // Use ComponentType<IconProps> for icon
+//   }[];
+// }) {
+//   return (
+//     <SidebarGroup>
+//       <SidebarGroupContent className="flex flex-col gap-2">
+//         <SidebarMenu>
+//           <SidebarMenuItem className="flex items-center gap-2">
+//             {/* <SidebarMenuButton
+//                 tooltip="Quick Create"
+//                 className="bg-primary text-primary-foreground hover:bg-primary/90 hover:text-primary-foreground active:bg-primary/90 active:text-primary-foreground min-w-8 duration-200 ease-linear"
+//               >
+//                 <IconCirclePlusFilled />
+//                 <span>Quick Create</span>
+//               </SidebarMenuButton>
+//               <Button
+//                 size="icon"
+//                 className="size-8 group-data-[collapsible=icon]:opacity-0"
+//                 variant="outline"
+//               >
+//                 <IconMail />
+//                 <span className="sr-only">Inbox</span>
+//               </Button> */}
+//           </SidebarMenuItem>
+//         </SidebarMenu>
+//         <SidebarMenu>
+//           {items.map((item) => (
+//             <SidebarMenuItem key={item.title}>
+//               <SidebarMenuButton tooltip={item.title}>
+//                 {item.icon && <item.icon />}
+//                 <span>{item.title}</span>
+//               </SidebarMenuButton>
+//             </SidebarMenuItem>
+//           ))}
+//         </SidebarMenu>
+//       </SidebarGroupContent>
+//     </SidebarGroup>
+//   );
+// }
 __turbopack_context__.s({
     "NavMain": (()=>NavMain)
 });
@@ -1606,12 +1661,12 @@ function NavMain({ items }) {
                         className: "flex items-center gap-2"
                     }, void 0, false, {
                         fileName: "[project]/src/components/nav-main.tsx",
-                        lineNumber: 31,
+                        lineNumber: 90,
                         columnNumber: 11
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/src/components/nav-main.tsx",
-                    lineNumber: 30,
+                    lineNumber: 89,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$sidebar$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["SidebarMenu"], {
@@ -1621,41 +1676,41 @@ function NavMain({ items }) {
                                 children: [
                                     item.icon && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(item.icon, {}, void 0, false, {
                                         fileName: "[project]/src/components/nav-main.tsx",
-                                        lineNumber: 53,
+                                        lineNumber: 98,
                                         columnNumber: 31
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                         children: item.title
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/nav-main.tsx",
-                                        lineNumber: 54,
+                                        lineNumber: 99,
                                         columnNumber: 17
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/nav-main.tsx",
-                                lineNumber: 52,
+                                lineNumber: 97,
                                 columnNumber: 15
                             }, this)
                         }, item.title, false, {
                             fileName: "[project]/src/components/nav-main.tsx",
-                            lineNumber: 51,
+                            lineNumber: 96,
                             columnNumber: 13
                         }, this))
                 }, void 0, false, {
                     fileName: "[project]/src/components/nav-main.tsx",
-                    lineNumber: 49,
+                    lineNumber: 94,
                     columnNumber: 9
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/src/components/nav-main.tsx",
-            lineNumber: 29,
+            lineNumber: 88,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/src/components/nav-main.tsx",
-        lineNumber: 28,
+        lineNumber: 87,
         columnNumber: 5
     }, this);
 }
