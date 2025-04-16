@@ -1,4 +1,4 @@
-// File: C:\Users\Afzaal Hamzah\OneDrive\Documents\Carebite\frontend\src\app\dashboard\page.js
+// File: E:\Javascript and Web Dev\React\Updated DB project\carebite-frontend\src\app\dashboard\page.tsx
 import * as entry from '../../../../src/app/dashboard/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 
