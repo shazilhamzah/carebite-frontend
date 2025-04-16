@@ -80,7 +80,7 @@ export function NavMain({
   items: {
     title: string;
     url: string;
-    icon?: React.ComponentType<Omit<IconProps, "ref">>; // Omit 'ref' from IconProps
+    icon?: React.ComponentType<any>; // Omit 'ref' from IconProps
   }[];
 }) {
   return (
