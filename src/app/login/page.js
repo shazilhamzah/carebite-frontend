@@ -14,9 +14,11 @@ import { Label } from "@/components/ui/label"
 
 // REACT COMPONENTS
 import { useState } from "react"
+import { useGlobalState } from "@/lib/globalStates";
 
 
 export default function LoginPage() {
+    const { setUserType,setCurrentUser,currentUser } = useGlobalState();
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
     const [error, setError] = useState("")
@@ -47,10 +49,15 @@ export default function LoginPage() {
             // Store token/user info if needed
             localStorage.setItem("token", data.token);
             localStorage.setItem("user", JSON.stringify(data.user));
+            console.log("I am here")
+            console.log(data.user);
+            setCurrentUser(data.user);
+            console.log(currentUser);
 
             // Redirect based on role or user type
             if (data.user.role === "Worker") {
-                router.push("/dashboard")
+                setUserType("Worker");
+                router.push("/dashboard/worker")
             } else if (data.role === "staff") {
                 router.push("/dashboard/staff")
             } else {
