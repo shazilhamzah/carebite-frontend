@@ -1,3 +1,4 @@
+'use client'
 import { AppSidebar } from "@/components/app-sidebar";
 import { ChartAreaInteractive } from "@/components/chart-area-interactive";
 import { DataTable } from "@/components/data-table";
@@ -6,8 +7,20 @@ import { SiteHeader } from "@/components/site-header";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 
 import data from "./data.json";
+import { useEffect } from "react";
+import { getUserFromLocalStorage } from "@/lib/auth";
+import { useRouter } from "next/navigation";
 
 export default function Page() {
+  const router = useRouter();
+
+  useEffect(() => {
+    const user = getUserFromLocalStorage();
+    if (!user || user.role.toLowerCase() !== "worker") {
+      router.push("/login");
+    }
+  }, []);
+
   return (
     <SidebarProvider
       style={

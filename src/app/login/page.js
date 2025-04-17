@@ -2,7 +2,8 @@
 
 // NEXT COMPONENTS
 import Link from "next/link"
-import Image from "next/image"
+import { useRouter } from "next/navigation"
+// import '../../../envConfig.ts'
 
 
 // SHADCN-UI COMPONENTS
@@ -12,11 +13,55 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 
 // REACT COMPONENTS
-import { Package2 } from 'lucide-react'
 import { useState } from "react"
 
 
 export default function LoginPage() {
+    const [username, setUsername] = useState("")
+    const [password, setPassword] = useState("")
+    const [error, setError] = useState("")
+    const router = useRouter();
+    const BACKEND_HOST = process.env.NEXT_PUBLIC_BACKEND_HOST;
+    const handleLogin = async (e) => {
+        console.log(BACKEND_HOST);
+        e.preventDefault()
+        setError("")
+        try {
+            console.log(username, password);
+            const res = await fetch(`${BACKEND_HOST}/api/auth/login`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ username, password }),
+            })
+
+            const data = await res.json()
+            console.log(data);
+
+
+            if (!res.ok) {
+                throw new Error(data.message || "Login failed")
+            }
+
+            // Store token/user info if needed
+            localStorage.setItem("token", data.token);
+            localStorage.setItem("user", JSON.stringify(data.user));
+
+            // Redirect based on role or user type
+            if (data.user.role === "Worker") {
+                router.push("/dashboard")
+            } else if (data.role === "staff") {
+                router.push("/dashboard/staff")
+            } else {
+                router.push("/dashboard1")
+            }
+        } catch (err) {
+            setError('*Invalid username or password')
+        }
+    }
+
+
     return (
         <div className="flex  min-h-screen flex-col items-center justify-center bg-slate-50 p-4">
             <div className="w-full max-w-md">
@@ -44,9 +89,11 @@ export default function LoginPage() {
                                     </Label>
                                     <Input
                                         id="username"
-                                        type="username"
-                                        placeholder="e.g. W23-X19910"
+                                        type="text"
+                                        placeholder="e.g. W123456"
                                         required
+                                        value={username}
+                                        onChange={(e) => setUsername(e.target.value)}
                                         className="h-10 px-3 py-2 text-sm rounded-md border border-slate-200 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
                                     />
                                 </div>
@@ -63,20 +110,29 @@ export default function LoginPage() {
                                         id="password"
                                         type="password"
                                         required
-                                        className="h-10 px-3 py-2 text-sm rounded-md border border-slate-200 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                                        value={password}
+                                        onChange={(e) => setPassword(e.target.value)}
+                                        className="h-10 px-3 py-2 text-sm rounded-md border"
                                     />
                                 </div>
-                                <Link href={"/dashboard"}>
-                                    <Button
-                                        type="submit"
-                                        className="w-full h-10 px-4 py-2 mt-2 text-sm font-medium text-white bg-green-600 hover:bg-green-700 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
-                                    >
-                                        Sign In
-                                    </Button>
-                                </Link>
+
+                                <Button
+                                    type="submit"
+                                    onClick={handleLogin}
+                                    className={`w-full h-10 px-4 py-2 mt-2 text-sm font-medium text-white bg-green-600 hover:bg-green-700 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 ${!username || !password ? "opacity-50 cursor-not-allowed" : ""}`}
+                                    disabled={!username || !password}
+                                >
+                                    Sign In
+                                </Button>
+
                             </div>
                         </form>
                     </CardContent>
+                    {error && (
+                        <div className="px-6 pb-2 text-sm text-red-500">
+                            {error}
+                        </div>
+                    )}
                     <CardFooter className="flex flex-col items-center gap-4 px-6 pt-2 pb-6 text-sm text-slate-600">
                         <div className="text-center text-xs">
                             Having trouble logging in? Contact system administrator at admin@carebite.com
