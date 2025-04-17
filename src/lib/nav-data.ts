@@ -123,7 +123,7 @@ export function getNavData(role: UserRole) {
         documents: [],
         navSecondary: [],
       };
-
+      
     case "worker":
       return {
         navMain: [
