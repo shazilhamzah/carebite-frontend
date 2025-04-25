@@ -7,7 +7,7 @@ import { SiteHeader } from "@/components/site-header";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 
 // import data from "./data.json";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getUserFromLocalStorage } from "@/lib/auth";
 import { useRouter } from "next/navigation";
 import { useGlobalState } from "@/lib/globalStates";
@@ -22,13 +22,18 @@ import AttendancePageSupervisor from "@/components/attendance-page-supervisor";
 export default function Page() {
   const router = useRouter();
   const { userTab, userType } = useGlobalState();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const user = getUserFromLocalStorage();
     if (!user || user.role.toLowerCase() !== "supervisor") {
       router.push("/login");
+    } else {
+      setLoading(false);
     }
   }, []);
+
+  if (loading) return null; 
 
   return (
     <SidebarProvider
