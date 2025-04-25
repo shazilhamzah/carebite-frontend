@@ -22,19 +22,29 @@ import {
   IconVocabulary,
   IconReportMedical,
   IconCalendarWeek,
+  IconCalendar,
 } from "@tabler/icons-react";
 import { ChefHat, Coins, Hospital, PersonStanding } from "lucide-react";
 
-type UserRole = "worker" | "gmHosp" | "gmCord" | "GS" | "Donors" | "ADM" | "Supervisor" | "gm" | "etc.";
+type UserRole =
+  | "worker"
+  | "gmHosp"
+  | "gmCord"
+  | "GS"
+  | "Donors"
+  | "ADM"
+  | "Supervisor"
+  | "gm"
+  | "etc.";
 
 export function getNavData(role: UserRole) {
   switch (role) {
     case "Donors":
-      return{
+      return {
         navMain: [
-          { title: "Personal Information", url: "#", icon: PersonStanding},
+          { title: "Personal Information", url: "#", icon: PersonStanding },
           { title: "Funds Status", url: "#", icon: IconAdjustmentsDollar },
-          { title: "Requests", url: "#", icon: IconUserQuestion},
+          { title: "Requests", url: "#", icon: IconUserQuestion },
           { title: "Hospitals Information", url: "#", icon: Hospital },
           { title: "Food Status", url: "#", icon: IconToolsKitchen3 },
           { title: "Announcements", url: "#", icon: IconSpeakerphone },
@@ -47,12 +57,12 @@ export function getNavData(role: UserRole) {
       return {
         navMain: [
           { title: "Personal Information", url: "#", icon: PersonStanding },
-          { title: "Reviews", url: "#", icon: IconDevicesCheck},
+          { title: "Reviews", url: "#", icon: IconDevicesCheck },
           { title: "Requests", url: "#", icon: IconUserQuestion },
           { title: "Donations", url: "#", icon: IconMoneybag },
           { title: "Hospitals Information", url: "#", icon: Hospital },
           { title: "Funds Status", url: "#", icon: IconAdjustmentsDollar },
-          { title: "Attendance", url: "#", icon: IconCalendarWeek},
+          { title: "Attendance", url: "#", icon: IconCalendarWeek },
           { title: "Salary", url: "#", icon: Coins },
           { title: "Announcements", url: "#", icon: IconSpeakerphone },
         ],
@@ -60,16 +70,16 @@ export function getNavData(role: UserRole) {
         navSecondary: [],
       };
 
-     case "gmCord":
+    case "gmCord":
       return {
         navMain: [
           { title: "Personal Information", url: "#", icon: PersonStanding },
           { title: "Reviews", url: "#", icon: IconDevicesCheck },
-          { title: "Requests", url: "#", icon: IconUserQuestion},
-          { title: "Hospitals Information", url: "#", icon:  Hospital },
+          { title: "Requests", url: "#", icon: IconUserQuestion },
+          { title: "Hospitals Information", url: "#", icon: Hospital },
           { title: "Funds Status", url: "#", icon: IconAdjustmentsDollar },
-          { title: "Attendance", url: "#", icon: IconCalendarWeek},
-          { title: "Salary", url: "#", icon: Coins  },
+          { title: "Attendance", url: "#", icon: IconCalendarWeek },
+          { title: "Salary", url: "#", icon: Coins },
           { title: "Announcements", url: "#", icon: IconSpeakerphone },
         ],
         documents: [],
@@ -80,12 +90,12 @@ export function getNavData(role: UserRole) {
       return {
         navMain: [
           { title: "Personal Information", url: "#", icon: PersonStanding },
-          { title: "Hospital Information", url: "#", icon:  Hospital  },
+          { title: "Hospital Information", url: "#", icon: Hospital },
           { title: "Reviews", url: "#", icon: IconDevicesCheck },
           { title: "Menu", url: "#", icon: IconVocabulary },
           { title: "Food status", url: "#", icon: IconBowl },
-          { title: "Attendance", url: "#", icon:IconCalendarWeek},
-          { title: "Salary", url: "#", icon: Coins  },
+          { title: "Attendance", url: "#", icon: IconCalendarWeek },
+          { title: "Salary", url: "#", icon: Coins },
           { title: "Announcements", url: "#", icon: IconSpeakerphone },
         ],
         documents: [],
@@ -100,8 +110,8 @@ export function getNavData(role: UserRole) {
           { title: "Requests", url: "#", icon: IconUserQuestion },
           { title: "Hospital Salaries", url: "#", icon: IconReportMedical },
           { title: "Funds Status", url: "#", icon: IconAdjustmentsDollar },
-          { title: "Food Stock", url: "#", icon: IconFridge},
-          { title: "Attendance", url: "#", icon: IconCalendarWeek},
+          { title: "Food Stock", url: "#", icon: IconFridge },
+          { title: "Attendance", url: "#", icon: IconCalendarWeek },
           { title: "Salary", url: "#", icon: Coins },
           { title: "Announcements", url: "#", icon: IconSpeakerphone },
         ],
@@ -113,23 +123,28 @@ export function getNavData(role: UserRole) {
       return {
         navMain: [
           { title: "Personal Information", url: "#", icon: PersonStanding },
-          { title: "Hospital Information", url: "#", icon:  Hospital  },
-          { title: "Reviews", url: "#", icon: IconDevicesCheck },
-          { title: "Requests", url: "#", icon: IconUserQuestion},
-          { title: "Attendance", url: "#", icon: IconCalendarWeek},
-          { title: "Salary", url: "#", icon: Coins  },
-          { title: "Announcements", url: "#", icon: IconSpeakerphone},
+          { title: "Hospital Information", url: "#", icon: Hospital },
+          // { title: "Reviews", url: "#", icon: IconDevicesCheck },
+          { title: "Requests", url: "#", icon: IconUserQuestion },
+          { title: "Attendance", url: "#", icon: IconCalendarWeek },
+          { title: "Workers Attendance", url: "#", icon: IconCalendar },
+          { title: "Salary", url: "#", icon: Coins },
+          { title: "Announcements", url: "#", icon: IconSpeakerphone },
         ],
         documents: [],
         navSecondary: [],
       };
-      
+
     case "worker":
       return {
         navMain: [
-          { title: "Personal Information", url: "/dashboard/personal-information", icon: PersonStanding },
-          { title: "Attendance", url: "#", icon: IconCalendarWeek},
-          { title: "Salary", url: "#", icon: Coins  },
+          {
+            title: "Personal Information",
+            url: "/dashboard/personal-information",
+            icon: PersonStanding,
+          },
+          { title: "Attendance", url: "#", icon: IconCalendarWeek },
+          { title: "Salary", url: "#", icon: Coins },
           { title: "Announcements", url: "#", icon: IconSpeakerphone },
         ],
         documents: [],

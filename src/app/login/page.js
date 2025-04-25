@@ -18,7 +18,7 @@ import { useGlobalState } from "@/lib/globalStates";
 
 
 export default function LoginPage() {
-    const { setUserType,setCurrentUser,currentUser } = useGlobalState();
+    const { setUserType, setCurrentUser, currentUser } = useGlobalState();
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
     const [error, setError] = useState("")
@@ -58,9 +58,11 @@ export default function LoginPage() {
             if (data.user.role === "Worker") {
                 setUserType("Worker");
                 router.push("/dashboard/worker")
-            } else if (data.role === "staff") {
-                router.push("/dashboard/staff")
+            } else if (data.user.role === "Supervisor") {
+                setUserType("Supervisor");
+                router.push("/dashboard/supervisor")
             } else {
+                console.log(data.user.role);
                 router.push("/dashboard1")
             }
         } catch (err) {

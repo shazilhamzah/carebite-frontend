@@ -151,7 +151,7 @@ const data = {
   ],
 };
 
-type UserRole = "worker" | "gm" | "etc.";
+type UserRole = "worker" | "gm" | "Supervisor";
 
 export function AppSidebar({
   userRole = "worker",
