@@ -1,12 +1,16 @@
+<<<<<<< HEAD
 "use client"
 
 import { useGlobalState } from "@/lib/globalStates"
 import { getNavData } from "@/lib/nav-data"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+=======
+>>>>>>> main
 import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
+<<<<<<< HEAD
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
@@ -101,4 +105,21 @@ export function AppSidebar({ variant = "sidebar", userRole }: AppSidebarProps) {
       <SidebarRail />
     </Sidebar>
   )
+=======
+  SidebarGroup,
+  SidebarHeader,
+} from "@/components/ui/sidebar";
+
+export function AppSidebar() {
+  return (
+    <Sidebar>
+      <SidebarHeader />
+      <SidebarContent>
+        <SidebarGroup />
+        <SidebarGroup />
+      </SidebarContent>
+      <SidebarFooter />
+    </Sidebar>
+  );
+>>>>>>> main
 }

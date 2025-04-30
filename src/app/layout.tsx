@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { AppSidebar } from "@/components/ui/app-sidebar";
+import { GlobalProvider } from "@/lib/globalStates";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -15,9 +18,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Carebite",
   description: "",
-  icons:{
-    icon:'/logo.ico'
-  }
+  icons: {
+    icon: "/logo.ico",
+  },
 };
 
 export default function RootLayout({
@@ -31,7 +34,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         suppressHydrationWarning
       >
-        {children}
+        <GlobalProvider>{children}</GlobalProvider>
       </body>
     </html>
   );
