@@ -12,3 +12,13 @@ export function getUserFromLocalStorage() {
     return null;
   }
 }
+<<<<<<< HEAD
+
+export function removeUserFromLocalStorage() {
+  if (typeof window !== "undefined") {
+    localStorage.removeItem("token")
+    localStorage.removeItem("user")
+  }
+}
+=======
+>>>>>>> main

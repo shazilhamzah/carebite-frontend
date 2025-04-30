@@ -151,7 +151,11 @@ const data = {
   ],
 };
 
+<<<<<<< HEAD
+type UserRole = "worker" | "gm" | "Supervisor" | "gmCord" | "gmHosp" | "ADM" | "Donors";
+=======
 type UserRole = "worker" | "gm" | "Supervisor";
+>>>>>>> main
 
 export function AppSidebar({
   userRole = "worker",
