@@ -12,7 +12,6 @@ export function getUserFromLocalStorage() {
     return null;
   }
 }
-<<<<<<< HEAD
 
 export function removeUserFromLocalStorage() {
   if (typeof window !== "undefined") {
@@ -20,5 +19,3 @@ export function removeUserFromLocalStorage() {
     localStorage.removeItem("user")
   }
 }
-=======
->>>>>>> main
