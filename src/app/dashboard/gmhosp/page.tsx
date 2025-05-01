@@ -25,11 +25,11 @@ export default function GMHospitalDashboard() {
 
   useEffect(() => {
     const user = getUserFromLocalStorage()
-    if (!user || user.role.toLowerCase() !== "gmhosp") {
-      router.push("/login")
-    } else {
+    //if (!user || user.role.toLowerCase() !== "gmhosp") {
+      //router.push("/login")
+    //} else {
       setUserType("gmHosp")
-    }
+    //}
   }, [router, setUserType])
 
   return (
