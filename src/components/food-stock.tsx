@@ -1,10 +1,23 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { Badge } from "@/components/ui/badge"
+import { useState } from "react";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { Badge } from "@/components/ui/badge";
 import {
   Dialog,
   DialogContent,
@@ -12,51 +25,48 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
-import { Label } from "@/components/ui/label"
-import { Input } from "@/components/ui/input"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { AlertCircle, ArrowUpDown, BarChart3, Plus, Search, ShoppingCart } from "lucide-react"
+} from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  AlertCircle,
+  ArrowUpDown,
+  BarChart3,
+  Plus,
+  Search,
+  ShoppingCart,
+} from "lucide-react";
 
 export default function FoodStock() {
-  const [category, setCategory] = useState("all")
+  const [category, setCategory] = useState("all");
 
-  // Sample food stock data
   const stockData = [
     { id: 1, name: "Rice", category: "grains", quantity: 250, unit: "kg", status: "sufficient", reorderLevel: 50 },
-    {
-      id: 2,
-      name: "Wheat Flour",
-      category: "grains",
-      quantity: 120,
-      unit: "kg",
-      status: "sufficient",
-      reorderLevel: 30,
-    },
+    { id: 2, name: "Wheat Flour", category: "grains", quantity: 120, unit: "kg", status: "sufficient", reorderLevel: 30 },
     { id: 3, name: "Chicken", category: "meat", quantity: 45, unit: "kg", status: "low", reorderLevel: 50 },
     { id: 4, name: "Beef", category: "meat", quantity: 60, unit: "kg", status: "sufficient", reorderLevel: 40 },
     { id: 5, name: "Tomatoes", category: "vegetables", quantity: 15, unit: "kg", status: "critical", reorderLevel: 20 },
-    {
-      id: 6,
-      name: "Potatoes",
-      category: "vegetables",
-      quantity: 80,
-      unit: "kg",
-      status: "sufficient",
-      reorderLevel: 30,
-    },
+    { id: 6, name: "Potatoes", category: "vegetables", quantity: 80, unit: "kg", status: "sufficient", reorderLevel: 30 },
     { id: 7, name: "Milk", category: "dairy", quantity: 25, unit: "L", status: "low", reorderLevel: 30 },
     { id: 8, name: "Eggs", category: "dairy", quantity: 200, unit: "pcs", status: "sufficient", reorderLevel: 100 },
     { id: 9, name: "Apples", category: "fruits", quantity: 10, unit: "kg", status: "critical", reorderLevel: 15 },
     { id: 10, name: "Bananas", category: "fruits", quantity: 30, unit: "kg", status: "sufficient", reorderLevel: 20 },
-  ]
+  ];
 
-  const filteredStock = category === "all" ? stockData : stockData.filter((item) => item.category === category)
+  const filteredStock = category === "all"
+    ? stockData
+    : stockData.filter((item) => item.category === category);
 
-  // Calculate statistics
-  const totalItems = stockData.length
-  const lowStockItems = stockData.filter((item) => item.status === "low").length
-  const criticalItems = stockData.filter((item) => item.status === "critical").length
+  const totalItems = stockData.length;
+  const lowStockItems = stockData.filter((item) => item.status === "low").length;
+  const criticalItems = stockData.filter((item) => item.status === "critical").length;
 
   return (
     <div className="space-y-6">
@@ -68,36 +78,9 @@ export default function FoodStock() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Items</CardTitle>
-            <BarChart3 className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{totalItems}</div>
-            <p className="text-xs text-muted-foreground">Items in inventory</p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Low Stock Items</CardTitle>
-            <AlertCircle className="h-4 w-4 text-yellow-500" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{lowStockItems}</div>
-            <p className="text-xs text-muted-foreground">Items below recommended levels</p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Critical Stock</CardTitle>
-            <AlertCircle className="h-4 w-4 text-red-500" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{criticalItems}</div>
-            <p className="text-xs text-muted-foreground">Items requiring immediate attention</p>
-          </CardContent>
-        </Card>
+        <StatCard title="Total Items" value={totalItems} icon={<BarChart3 className="h-4 w-4 text-muted-foreground" />} />
+        <StatCard title="Low Stock Items" value={lowStockItems} icon={<AlertCircle className="h-4 w-4 text-yellow-500" />} />
+        <StatCard title="Critical Stock" value={criticalItems} icon={<AlertCircle className="h-4 w-4 text-red-500" />} />
       </div>
 
       <Card>
@@ -158,21 +141,7 @@ export default function FoodStock() {
                   <TableCell>{item.quantity}</TableCell>
                   <TableCell>{item.unit}</TableCell>
                   <TableCell>
-                    {item.status === "sufficient" && (
-                      <Badge variant="outline" className="bg-green-50 text-green-600 hover:bg-green-50">
-                        Sufficient
-                      </Badge>
-                    )}
-                    {item.status === "low" && (
-                      <Badge variant="outline" className="bg-yellow-50 text-yellow-600 hover:bg-yellow-50">
-                        Low Stock
-                      </Badge>
-                    )}
-                    {item.status === "critical" && (
-                      <Badge variant="outline" className="bg-red-50 text-red-600 hover:bg-red-50">
-                        Critical
-                      </Badge>
-                    )}
+                    <StatusBadge status={item.status} />
                   </TableCell>
                   <TableCell>
                     <Button size="sm" variant="outline">
@@ -187,7 +156,35 @@ export default function FoodStock() {
         </CardContent>
       </Card>
     </div>
-  )
+  );
+}
+
+function StatCard({ title, value, icon }: { title: string; value: number; icon: React.ReactNode }) {
+  return (
+    <Card>
+      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+        <CardTitle className="text-sm font-medium">{title}</CardTitle>
+        {icon}
+      </CardHeader>
+      <CardContent>
+        <div className="text-2xl font-bold">{value}</div>
+        <p className="text-xs text-muted-foreground">Items in inventory</p>
+      </CardContent>
+    </Card>
+  );
+}
+
+function StatusBadge({ status }: { status: string }) {
+  const variants: Record<string, string> = {
+    sufficient: "bg-green-50 text-green-600 hover:bg-green-50",
+    low: "bg-yellow-50 text-yellow-600 hover:bg-yellow-50",
+    critical: "bg-red-50 text-red-600 hover:bg-red-50",
+  };
+  return (
+    <Badge variant="outline" className={variants[status]}>
+      {status.charAt(0).toUpperCase() + status.slice(1)}
+    </Badge>
+  );
 }
 
 function RequestItemsDialog() {
@@ -252,5 +249,8 @@ function RequestItemsDialog() {
               </SelectContent>
             </Select>
           </div>
-          <div className="grid gap-2">
-    \
+        </div>
+      </DialogContent>
+    </Dialog>
+  );
+}

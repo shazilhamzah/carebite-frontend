@@ -1,28 +1,87 @@
 "use client"
 
+import { useEffect, useState } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
 import { Badge } from "@/components/ui/badge"
-import { Clock, CheckCircle2 } from "lucide-react"
-import { useState } from "react"
+import { Clock, CheckCircle2, Loader2, AlertCircle } from "lucide-react"
+import { fetchWorkerAttendance } from "@/lib/api"
+import { AlertDialog, AlertDialogDescription, AlertDialogTitle } from "@/components/ui/alert-dialog"
 
-export default function Attendance() {
+interface AttendanceRecord {
+  attendance_id: number
+  date: string
+  clock_in: string
+  clock_out: string
+  status: string
+}
+
+interface AttendanceProps {
+  userId: number
+}
+
+export default function Attendance({ userId }: AttendanceProps) {
   const [date, setDate] = useState<Date | undefined>(new Date())
   const [clockedIn, setClockedIn] = useState(false)
+  const [attendanceData, setAttendanceData] = useState<AttendanceRecord[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
 
-  // Sample attendance data
-  const attendanceData = [
-    { date: "2023-04-22", clockIn: "08:55 AM", clockOut: "05:05 PM", status: "Present" },
-    { date: "2023-04-21", clockIn: "09:02 AM", clockOut: "05:15 PM", status: "Present" },
-    { date: "2023-04-20", clockIn: "08:45 AM", clockOut: "04:50 PM", status: "Present" },
-    { date: "2023-04-19", clockIn: "09:10 AM", clockOut: "05:30 PM", status: "Present" },
-    { date: "2023-04-18", clockIn: "08:50 AM", clockOut: "05:00 PM", status: "Present" },
-  ]
+  useEffect(() => {
+    const loadAttendance = async () => {
+      try {
+        const data = await fetchWorkerAttendance(userId)
+        if (typeof data === "string") {
+          // Handle the case where the API returns a string message
+          setAttendanceData([])
+        } else {
+          setAttendanceData(data)
+        }
+      } catch (err) {
+        setError("Failed to load attendance records")
+        console.error(err)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    loadAttendance()
+  }, [userId])
 
   const handleClockInOut = () => {
+    // This is just UI state since the API doesn't support real-time clock in/out
     setClockedIn(!clockedIn)
   }
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-64">
+        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+      </div>
+    )
+  }
+
+  if (error) {
+    return (
+      <div className="container mx-auto p-6">
+        <div className="flex items-center gap-3 rounded-md border border-red-300 bg-red-50 p-4 text-red-700">
+          <AlertCircle className="h-5 w-5 text-red-600" />
+          <span>{error}</span>
+        </div>
+      </div>
+    )
+  }
+
+  // Format attendance data for display
+  const formattedAttendance = attendanceData
+    .map((record) => ({
+      date: new Date(record.date).toLocaleDateString(),
+      clockIn: record.clock_in || "N/A",
+      clockOut: record.clock_out || "N/A",
+      status: record.status || "Present",
+    }))
+    .slice(0, 5) // Show only the 5 most recent records
 
   return (
     <div className="container mx-auto p-6">
@@ -68,27 +127,37 @@ export default function Attendance() {
           <Card>
             <CardHeader>
               <CardTitle>Attendance Summary</CardTitle>
-              <CardDescription>Your attendance statistics for this month</CardDescription>
+              <CardDescription>Your attendance statistics</CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="grid grid-cols-2 gap-4">
-                <div className="rounded-lg bg-muted p-4 text-center">
-                  <div className="text-2xl font-bold">22</div>
-                  <div className="text-sm text-muted-foreground">Present Days</div>
+              {attendanceData.length === 0 ? (
+                <div className="text-center text-muted-foreground py-4">No attendance records found</div>
+              ) : (
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="rounded-lg bg-muted p-4 text-center">
+                    <div className="text-2xl font-bold">
+                      {attendanceData.filter((a) => a.status === "Present").length}
+                    </div>
+                    <div className="text-sm text-muted-foreground">Present Days</div>
+                  </div>
+                  <div className="rounded-lg bg-muted p-4 text-center">
+                    <div className="text-2xl font-bold">
+                      {attendanceData.filter((a) => a.status === "Absent").length}
+                    </div>
+                    <div className="text-sm text-muted-foreground">Absent Days</div>
+                  </div>
+                  <div className="rounded-lg bg-muted p-4 text-center">
+                    <div className="text-2xl font-bold">
+                      {attendanceData.filter((a) => a.clock_in && new Date(a.clock_in).getHours() >= 9).length}
+                    </div>
+                    <div className="text-sm text-muted-foreground">Late Arrivals</div>
+                  </div>
+                  <div className="rounded-lg bg-muted p-4 text-center">
+                    <div className="text-2xl font-bold">{attendanceData.length}</div>
+                    <div className="text-sm text-muted-foreground">Total Records</div>
+                  </div>
                 </div>
-                <div className="rounded-lg bg-muted p-4 text-center">
-                  <div className="text-2xl font-bold">1</div>
-                  <div className="text-sm text-muted-foreground">Absent Days</div>
-                </div>
-                <div className="rounded-lg bg-muted p-4 text-center">
-                  <div className="text-2xl font-bold">2</div>
-                  <div className="text-sm text-muted-foreground">Late Arrivals</div>
-                </div>
-                <div className="rounded-lg bg-muted p-4 text-center">
-                  <div className="text-2xl font-bold">176</div>
-                  <div className="text-sm text-muted-foreground">Total Hours</div>
-                </div>
-              </div>
+              )}
             </CardContent>
           </Card>
         </div>
@@ -107,30 +176,28 @@ export default function Attendance() {
           <Card>
             <CardHeader>
               <CardTitle>Recent Attendance</CardTitle>
-              <CardDescription>Your attendance for the past week</CardDescription>
+              <CardDescription>Your recent attendance records</CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="space-y-4">
-                {attendanceData.map((record, index) => (
-                  <div key={index} className="flex items-center justify-between border-b pb-2">
-                    <div>
-                      <div className="font-medium">
-                        {new Date(record.date).toLocaleDateString([], {
-                          weekday: "short",
-                          month: "short",
-                          day: "numeric",
-                        })}
+              {formattedAttendance.length === 0 ? (
+                <div className="text-center text-muted-foreground py-4">No recent attendance records found</div>
+              ) : (
+                <div className="space-y-4">
+                  {formattedAttendance.map((record, index) => (
+                    <div key={index} className="flex items-center justify-between border-b pb-2">
+                      <div>
+                        <div className="font-medium">{record.date}</div>
+                        <div className="text-sm text-muted-foreground">
+                          {record.clockIn} - {record.clockOut}
+                        </div>
                       </div>
-                      <div className="text-sm text-muted-foreground">
-                        {record.clockIn} - {record.clockOut}
-                      </div>
+                      <Badge variant="outline" className="bg-green-50 text-green-700">
+                        {record.status}
+                      </Badge>
                     </div>
-                    <Badge variant="outline" className="bg-green-50 text-green-700">
-                      {record.status}
-                    </Badge>
-                  </div>
-                ))}
-              </div>
+                  ))}
+                </div>
+              )}
             </CardContent>
           </Card>
         </div>
