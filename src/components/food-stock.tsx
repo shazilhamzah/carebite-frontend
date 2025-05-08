@@ -60,7 +60,7 @@ export default function FoodStock() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
+      {/* <div className="flex items-center justify-between">
         <h2 className="text-2xl font-bold">Food Stock Management</h2>
         <div className="flex items-center gap-2">
           <RequestItemsDialog />
@@ -253,4 +253,5 @@ function RequestItemsDialog() {
             </Select>
           </div>
           <div className="grid gap-2">
-    \
+    \ */}
+    </div>)}
