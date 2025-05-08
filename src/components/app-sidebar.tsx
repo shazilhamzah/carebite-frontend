@@ -185,7 +185,8 @@ export function AppSidebar({
               className="data-[slot=sidebar-menu-button]:!p-1.5"
             >
               <a href="#">
-                <IconInnerShadowTop className="!size-5" />
+                {/* <IconInnerShadowTop className="!size-5" /> */}
+                <img src="/images/logo.png" alt="Carebite Logo" className="h-8 w-8 mt-0.5" />
                 <span className="text-base font-semibold">Carebite</span>
               </a>
             </SidebarMenuButton>
@@ -198,13 +199,15 @@ export function AppSidebar({
         <NavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>
       <SidebarFooter>
-        {currentUser&&<NavUser
-          user={{
-            name: currentUser.name,
-            email: currentUser.username,
-            avatar: "/avatars/shadcn.jpg",
-          }}
-        />}
+        {currentUser && (
+          <NavUser
+            user={{
+              name: currentUser.name,
+              email: currentUser.username,
+              avatar: "/avatars/shadcn.jpg",
+            }}
+          />
+        )}
       </SidebarFooter>
     </Sidebar>
   );

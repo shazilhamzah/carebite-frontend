@@ -89,7 +89,7 @@ export default function Reviews({ canSubmit = false, canReview = false, canRespo
     activeTab === "all" ? reviewsData : reviewsData.filter((review) => review.status === activeTab)
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 m-8">
       <div className="flex items-center justify-between">
         <h2 className="text-2xl font-bold">Reviews & Feedback</h2>
         {canSubmit && <SubmitReviewDialog />}

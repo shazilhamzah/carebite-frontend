@@ -1,36 +1,40 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { useEffect } from "react"
-import { useRouter } from "next/navigation"
-import { AppSidebar } from "@/components/app-sidebar"
-import { SiteHeader } from "@/components/site-header"
-import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar"
-import { getUserFromLocalStorage } from "@/lib/auth"
-import { useGlobalState } from "@/lib/globalStates"
-import PersonalInformation from "@/components/personalInformation"
-import Announcements from "@/components/announcements"
-import Requests from "@/components/requests"
-import HospitalsInformation from "@/components/hospitals-information"
-import FundsStatus from "@/components/funds-status"
-import Salary from "@/components/salary"
-import Reviews from "@/components/reviews"
-import MoneyTransfers from "@/components/money-transfers"
-import PersonnelManagement from "@/components/personnel-management"
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { AppSidebar } from "@/components/app-sidebar";
+import { SiteHeader } from "@/components/site-header";
+import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
+import { getUserFromLocalStorage } from "@/lib/auth";
+import { useGlobalState } from "@/lib/globalStates";
+import PersonalInformation from "@/components/personalInformation";
+import Announcements from "@/components/announcements";
+import Requests from "@/components/requests";
+import HospitalsInformation from "@/components/hospitals-information";
+import FundsStatus from "@/components/funds-status";
+import Salary from "@/components/salary";
+import Reviews from "@/components/reviews";
+import MoneyTransfers from "@/components/money-transfers";
+import PersonnelManagement from "@/components/personnel-management";
+import Attendance from "@/components/attendance";
 
 export default function GMCoordinatorDashboard() {
-  const router = useRouter()
-  const { userTab, setUserType } = useGlobalState()
+  const router = useRouter();
+  const { userTab, setUserType } = useGlobalState();
 
   useEffect(() => {
-    const user = getUserFromLocalStorage()
-    if (!user || user.role.toLowerCase() !== "gmcord") {
-      router.push("/login")
+    const user = getUserFromLocalStorage();
+    console.log(user.role);
+    if (!user || user.role !== "General Manager Coordinator") {
+      console.log("Checkpoint 1");
+      router.push("/login");
     } else {
-      setUserType("gmCord")
+      console.log("Checkpoint 2");
+      setUserType("General Manager Coordinator");
     }
-  }, [router, setUserType])
+  }, [router, setUserType]);
 
   return (
     <SidebarProvider
@@ -52,8 +56,9 @@ export default function GMCoordinatorDashboard() {
         {userTab === "Reviews" && <Reviews />}
         {userTab === "Funds Status" && <FundsStatus />}
         {userTab === "Salary" && <Salary />}
+        {userTab === "Attendance" && <Attendance />}
         {userTab === "Announcements" && <Announcements />}
       </SidebarInset>
     </SidebarProvider>
-  )
+  );
 }

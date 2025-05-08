@@ -1,34 +1,36 @@
-"use client"
-import type React from "react"
-import { useEffect } from "react"
-import { useRouter } from "next/navigation"
-import { AppSidebar } from "@/components/app-sidebar"
-import { SiteHeader } from "@/components/site-header"
-import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar"
-import { getUserFromLocalStorage } from "@/lib/auth"
-import { useGlobalState } from "@/lib/globalStates"
-import PersonalInformation from "@/components/personalInformation"
-import Announcements from "@/components/announcements"
-import HospitalInformation from "@/components/hospital-information"
-import Requests from "@/components/requests"
-import HospitalSalaries from "@/components/hospital-salaries"
-import FundsStatus from "@/components/funds-status"
-import FoodStock from "@/components/food-stock"
-import Attendance from "@/components/attendance"
-import Salary from "@/components/salary"
+"use client";
+import type React from "react";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { AppSidebar } from "@/components/app-sidebar";
+import { SiteHeader } from "@/components/site-header";
+import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
+import { getUserFromLocalStorage } from "@/lib/auth";
+import { useGlobalState } from "@/lib/globalStates";
+import PersonalInformation from "@/components/personalInformation";
+import Announcements from "@/components/announcements";
+import HospitalInformation from "@/components/hospital-information";
+import Requests from "@/components/requests";
+import HospitalSalaries from "@/components/hospital-salaries";
+import FundsStatus from "@/components/funds-status";
+import FoodStock from "@/components/food-stock";
+import Attendance from "@/components/attendance";
+import Salary from "@/components/salary";
+import Reviews from "@/components/reviews";
 
 export default function ADMDashboard() {
-  const router = useRouter()
-  const { userTab, setUserType } = useGlobalState()
+  const router = useRouter();
+  const { userTab, setUserType } = useGlobalState();
 
   useEffect(() => {
-    const user = getUserFromLocalStorage()
+    const user = getUserFromLocalStorage();
+    console.log("Here,", user.role);
     if (!user || user.role.toLowerCase() !== "adm") {
-      router.push("/login")
+      router.push("/login");
     } else {
-      setUserType("ADM")
+      setUserType("ADM");
     }
-  }, [router, setUserType])
+  }, [router, setUserType]);
 
   return (
     <SidebarProvider
@@ -39,12 +41,13 @@ export default function ADMDashboard() {
         } as React.CSSProperties
       }
     >
-      <AppSidebar variant="inset" userRole = {"ADM"} />
+      <AppSidebar variant="inset" userRole={"ADM"} />
       <SidebarInset>
         <SiteHeader />
         {userTab === "Personal Information" && <PersonalInformation />}
         {userTab === "Hospital Information" && <HospitalInformation />}
         {userTab === "Requests" && <Requests />}
+        {userTab === "Reviews" && <Reviews />}
         {userTab === "Hospital Salaries" && <HospitalSalaries />}
         {userTab === "Funds Status" && <FundsStatus />}
         {userTab === "Food Stock" && <FoodStock />}
@@ -53,5 +56,5 @@ export default function ADMDashboard() {
         {userTab === "Announcements" && <Announcements />}
       </SidebarInset>
     </SidebarProvider>
-  )
+  );
 }

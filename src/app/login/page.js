@@ -54,6 +54,7 @@ export default function LoginPage() {
             setCurrentUser(data.user);
             console.log(currentUser);
 
+
             // Redirect based on role or user type
             if (data.user.role === "Worker") {
                 setUserType("Worker");
@@ -64,6 +65,12 @@ export default function LoginPage() {
             } else if (data.user.role === "General Manager Hospital") {
                 setUserType("Supervisor");
                 router.push("/dashboard/gmhosp")
+            } else if (data.user.role === "General Manager Coordinator") {
+                setUserType("gmcord");
+                router.push("/dashboard/gmcord")
+            } else if (data.user.role === "ADM") {
+                setUserType("ADM");
+                router.push("/dashboard/adm")
             } else {
                 console.log(data.user.role);
                 router.push("/dashboard1")
@@ -78,10 +85,10 @@ export default function LoginPage() {
         <div className="flex  min-h-screen flex-col items-center justify-center bg-slate-50 p-4">
             <div className="w-full max-w-md">
                 <div className="mb-6 flex flex-col items-center text-center">
-                    <div className="mb-2 flex h-16 w-16 items-center justify-center rounded-full bg-green-100">
-                        <img src="/images/logo.png" alt="Carebite Logo" className="h-8 w-8" />
-                    </div>
-                    <h1 className="text-2xl font-bold text-slate-900">Carebite</h1>
+                        <img src="/images/logo2.png" alt="Carebite Logo" className="h-24 w-24" />
+                    {/* <div className="mb-2 flex h-16 w-16 items-center justify-center rounded-full"> */}
+                    {/* </div> */}
+                    {/* <h1 className="text-2xl font-bold text-slate-900">Carebite</h1> */}
                     {/* <p className="text-slate-600">Management System</p> */}
                 </div>
 
