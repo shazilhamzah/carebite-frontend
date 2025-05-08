@@ -90,6 +90,7 @@ export default function LoginPage() {
                     {/* </div> */}
                     {/* <h1 className="text-2xl font-bold text-slate-900">Carebite</h1> */}
                     {/* <p className="text-slate-600">Management System</p> */}
+                    
                 </div>
 
                 <Card className="border rounded-lg shadow-sm bg-white">
