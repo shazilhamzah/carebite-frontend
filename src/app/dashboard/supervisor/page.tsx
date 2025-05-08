@@ -48,7 +48,7 @@ export default function SupervisorDashboard() {
         {userTab === "Requests" && <Requests />}
         {userTab === "Attendance" && <Attendance />}
         {userTab === "Salary" && <Salary />}
-        {userTab === "Announcements" && <Announcements canCreate={true} />}
+        {userTab === "Announcements" && <Announcements />}
       </SidebarInset>
     </SidebarProvider>
   )

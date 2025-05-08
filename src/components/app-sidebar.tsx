@@ -151,13 +151,29 @@ const data = {
   ],
 };
 
-type UserRole = "worker" | "gm" | "Supervisor" | "gmCord" | "gmHosp" | "ADM" | "Donors";
+type UserRole =
+  | "worker"
+  | "gm"
+  | "Supervisor"
+  | "gmCord"
+  | "gmHosp"
+  | "ADM"
+  | "Donors";
 
 export function AppSidebar({
   userRole = "worker",
   ...props
 }: { userRole: UserRole } & React.ComponentProps<typeof Sidebar>) {
   const data = getNavData(userRole);
+
+  const [currentUser, setUser] = React.useState<any | null>(null);
+
+  React.useEffect(() => {
+    const savedUser = localStorage.getItem("user");
+    if (savedUser) {
+      setUser(JSON.parse(savedUser));
+    }
+  }, []);
 
   return (
     <Sidebar collapsible="offcanvas" {...props}>
@@ -182,13 +198,13 @@ export function AppSidebar({
         <NavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser
+        {currentUser&&<NavUser
           user={{
-            name: "shadcn",
-            email: "m@example.com",
+            name: currentUser.name,
+            email: currentUser.username,
             avatar: "/avatars/shadcn.jpg",
           }}
-        />
+        />}
       </SidebarFooter>
     </Sidebar>
   );

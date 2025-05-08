@@ -3,7 +3,6 @@
 // NEXT COMPONENTS
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-// import '../../../envConfig.ts'
 
 
 // SHADCN-UI COMPONENTS
@@ -23,7 +22,8 @@ export default function LoginPage() {
     const [password, setPassword] = useState("")
     const [error, setError] = useState("")
     const router = useRouter();
-    const BACKEND_HOST = process.env.NEXT_PUBLIC_BACKEND_HOST;
+    // const BACKEND_HOST = process.env.NEXT_PUBLIC_BACKEND_HOST;
+    const BACKEND_HOST = "https://carebite-backend-dsgqf7fceqc0gmcw.canadacentral-01.azurewebsites.net";
     const handleLogin = async (e) => {
         console.log(BACKEND_HOST);
         e.preventDefault()
@@ -61,6 +61,9 @@ export default function LoginPage() {
             } else if (data.user.role === "Supervisor") {
                 setUserType("Supervisor");
                 router.push("/dashboard/supervisor")
+            } else if (data.user.role === "General Manager Hospital") {
+                setUserType("Supervisor");
+                router.push("/dashboard/gmhosp")
             } else {
                 console.log(data.user.role);
                 router.push("/dashboard1")

@@ -80,7 +80,7 @@ interface AttendanceData {
   attendance: AttendanceRecord | null;
 }
 
-export default function AttendancePageSupervisor() {
+export default function AttendancePageGMHosp() {
   // State for current user (supervisor)
   const [currentUser, setCurrentUser] = useState<User | null>(null);
 

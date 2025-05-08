@@ -83,10 +83,10 @@ export function getNavData(role: UserRole) {
       return {
         navMain: [
           { title: "Personal Information", url: "#", icon: PersonStanding },
-          { title: "Hospital Information", url: "#", icon:  Hospital  },
-          { title: "Reviews", url: "#", icon: IconDevicesCheck },
+          // { title: "Hospital Information", url: "#", icon:  Hospital  },
+          // { title: "Reviews", url: "#", icon: IconDevicesCheck },
           { title: "Menu", url: "#", icon: IconVocabulary },
-          { title: "Food status", url: "#", icon: IconBowl },
+          // { title: "Food status", url: "#", icon: IconBowl },
           { title: "Attendance", url: "#", icon:IconCalendarWeek},
           { title: "Salary", url: "#", icon: Coins  },
           { title: "Announcements", url: "#", icon: IconSpeakerphone },
