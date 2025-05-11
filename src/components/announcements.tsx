@@ -29,7 +29,6 @@ import {
   InfoIcon,
 } from "lucide-react";
 
-// Sample announcements data - in a real app, this would come from an API or database
 const announcements = [
   {
     id: 1,
@@ -166,6 +165,7 @@ export default function Announcements() {
   // const BACKEND_HOST = process.env.NEXT_PUBLIC_BACKEND_HOST;
   const BACKEND_HOST =
     "https://carebite-backend-dsgqf7fceqc0gmcw.canadacentral-01.azurewebsites.net";
+    // "http://localhost:5000"
 
   useEffect(() => {
     const savedUser = localStorage.getItem("user");
@@ -191,17 +191,47 @@ export default function Announcements() {
           }
         );
         const data = await res.json();
-        console.log("API response:", data);
+        // console.log("API response:", data);
         if (!res.ok) throw new Error(data.message || "Failed to fetch");
 
         // Assuming API returns [{ date_added, title, details }]
-        const formatted = data.map((item: any, index: number) => ({
-          id: item.id || index,
-          title: item.title,
-          date: item.date_added,
-          category: "information", // API doesn’t return category
-          content: `<p>${item.details}</p>`, // Wrap in <p> for consistency
-        }));
+        let formatted: any = [];
+        if (data) {
+          formatted = data.map((item: any, index: number) => ({
+            id: item.id || index,
+            title: item.title,
+            date: item.date_added,
+            category: "information", // API doesn’t return category
+            content: `<p>${item.details}</p>`, // Wrap in <p> for consistency
+          }));
+        }
+
+        setAnnouncements(formatted);
+      } else if (role === "Supervisor") {
+        const res = await fetch(
+          `${BACKEND_HOST}/api/sup/announcements/${currentUser.id}`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        const data = await res.json();
+        // console.log("API response:", data);
+        if (!res.ok) throw new Error(data.message || "Failed to fetch");
+
+        // Assuming API returns [{ date_added, title, details }]
+        let formatted: any = [];
+        if (data) {
+          formatted = data.map((item: any, index: number) => ({
+            id: item.id || index,
+            title: item.title,
+            date: item.date_added,
+            category: "information", // API doesn’t return category
+            content: `<p>${item.details}</p>`, // Wrap in <p> for consistency
+          }));
+        }
 
         setAnnouncements(formatted);
       }
@@ -216,6 +246,9 @@ export default function Announcements() {
     let role: string = "";
     if (currentUser.role === "Worker") {
       role = "Worker";
+      getAnnouncements(role);
+    } else if (currentUser.role === "Supervisor") {
+      role = "Supervisor";
       getAnnouncements(role);
     }
 
