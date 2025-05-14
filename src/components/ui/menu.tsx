@@ -106,7 +106,8 @@ export default function Menu({ canEdit = true }: MenuProps) {
 
   const BACKEND_HOST =
     // "https://carebite-backend-dsgqf7fceqc0gmcw.canadacentral-01.azurewebsites.net";
-    "http://localhost:5000";
+    // "http://localhost:5000";
+    process.env.NEXT_PUBLIC_BACKEND_HOST;
 
   useEffect(() => {
     const savedUser = localStorage.getItem("user");
@@ -251,7 +252,8 @@ function AddMealDialog({
   const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
 
-  const BACKEND_HOST = "http://localhost:5000";
+  // const BACKEND_HOST = "http://localhost:5000";
+  const BACKEND_HOST = process.env.NEXT_PUBLIC_BACKEND_HOST;
 
   const handleSubmit = async () => {
     const day = formatSelectedDate(week);

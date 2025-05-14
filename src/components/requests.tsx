@@ -91,11 +91,13 @@ export default function UtensilRequests() {
       getRequests();
     }
   }, [currentUser, userType]);
+  
+  const BACKEND_HOST = process.env.NEXT_PUBLIC_BACKEND_HOST;
 
   const getRequests = async () => {
     try {
       const response = await fetch(
-        `http://localhost:5000/api/${userType}/requested/${currentUser.id}`,
+        `${BACKEND_HOST}/api/${userType}/requested/${currentUser.id}`,
         {
           method: "GET",
           headers: {
@@ -130,8 +132,9 @@ export default function UtensilRequests() {
         list: newRequest,
       };
       console.log(list);
+      // const BACKEND_HOST = process.env.NEXT_PUBLIC_BACKEND_HOST;
       const response = await fetch(
-        `http://localhost:5000/api/${userType}/genreq/${currentUser.id}`,
+        `${BACKEND_HOST}/api/${userType}/genreq/${currentUser.id}`,
         {
           method: "POST",
           headers: {

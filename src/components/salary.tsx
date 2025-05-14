@@ -248,11 +248,12 @@ export default function Salary() {
   const handleConfirm = (received: boolean) => {
     setIsConfirmed(received);
   };
+  const BACKEND_HOST = process.env.NEXT_PUBLIC_BACKEND_HOST;
 
   const getSalary = async () => {
     try {
       const res = await fetch(
-        `http://localhost:5000/api/${userType}/salary/${currentUser.id}`,
+        `${BACKEND_HOST}/api/${userType}/salary/${currentUser.id}`,
         {
           method: "GET",
           headers: {
@@ -290,7 +291,7 @@ export default function Salary() {
     setIsSaving(true);
     try {
       const res = await fetch(
-        `http://localhost:5000/api/${userType}/salary/${currentUser.id}`,
+        `${BACKEND_HOST}/api/${userType}/salary/${currentUser.id}`,
         {
           method: "POST",
           headers: {

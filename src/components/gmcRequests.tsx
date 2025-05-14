@@ -9,7 +9,8 @@ export default function UtensilRequests() {
   const [requests, setRequests] = useState<UtensilRequest[]>([]);
 
   const [currentUser, setUser] = useState<any | null>(null);
-  const BACKEND_HOST = "http://localhost:5000";
+  // const BACKEND_HOST = "http://localhost:5000";
+  const BACKEND_HOST = process.env.NEXT_PUBLIC_BACKEND_HOST;
 
   type UtensilRequest = {
     utensil_request_id: number;
@@ -99,10 +100,12 @@ function UtensilRequestCard({ request, userID }: UtensilRequestCardProps) {
     }
   };
 
+  const BACKEND_HOST = process.env.NEXT_PUBLIC_BACKEND_HOST;
+
   const handleApproval = async () => {
     try {
       const response = await fetch(
-        `http://localhost:5000/api/gmc/requesteduten/${userID}`,
+        `${BACKEND_HOST}/api/gmc/requesteduten/${userID}`,
         {
           method: "POST",
           headers: {

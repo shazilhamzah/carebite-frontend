@@ -48,6 +48,9 @@ export default function AttendancePageGMHosp() {
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
   const [currentUser, setUser] = useState<any | null>(null);
 
+
+  const BACKEND_HOST = process.env.NEXT_PUBLIC_BACKEND_HOST;
+
   useEffect(() => {
     const savedUser = localStorage.getItem("user");
     if (savedUser) {
@@ -62,7 +65,7 @@ export default function AttendancePageGMHosp() {
     const fetchAttendance = async () => {
       try {
         const response = await fetch(
-          `http://localhost:5000/api/gmh/attendance/${currentUser.id}`
+          `${BACKEND_HOST}/api/gmh/attendance/${currentUser.id}`
         );
         const data = await response.json();
 
@@ -101,7 +104,7 @@ export default function AttendancePageGMHosp() {
   const handleSaveAttendance = async () => {
     try {
       const response = await fetch(
-        `http://localhost:5000/api/gmh/attendance/${currentUser.id}`,
+        `${BACKEND_HOST}/api/gmh/attendance/${currentUser.id}`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

@@ -289,7 +289,8 @@ export default function Attendance() {
 
   const BACKEND_HOST =
     // "https://carebite-backend-dsgqf7fceqc0gmcw.canadacentral-01.azurewebsites.net";
-    "http://localhost:5000";
+    // "http://localhost:5000";
+    process.env.NEXT_PUBLIC_BACKEND_HOST;
 
   useEffect(() => {
     const savedUser = localStorage.getItem("user");

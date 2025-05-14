@@ -49,7 +49,8 @@ export default function GMHAnnouncements() {
   // const BACKEND_HOST = process.env.NEXT_PUBLIC_BACKEND_HOST;
   const BACKEND_HOST =
     // "https://carebite-backend-dsgqf7fceqc0gmcw.canadacentral-01.azurewebsites.net";
-    "http://localhost:5000";
+    // "http://localhost:5000";
+    process.env.NEXT_PUBLIC_BACKEND_HOST;
 
   useEffect(() => {
     const savedUser = localStorage.getItem("user");
@@ -190,7 +191,7 @@ export default function GMHAnnouncements() {
   const addAnnouncement = async () => {
     try {
       const response = await fetch(
-        `http://localhost:5000/api/gmh/announcements/${currentUser.id}`,
+        `${BACKEND_HOST}/api/gmh/announcements/${currentUser.id}`,
         {
           method: "POST",
           headers: {
