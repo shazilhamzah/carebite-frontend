@@ -41,7 +41,7 @@ interface NavItem {
 interface DocumentItem {
   name: string
   url: string
-  icon?: IconType
+  icon: IconType
 }
 
 interface NavData {
@@ -52,7 +52,7 @@ interface NavData {
 
 export type UserRole = "worker" | "gmHosp" | "gmCord" | "GS" | "Donors" | "ADM" | "Supervisor" | "gm" | "etc.";
 
-export function getNavData(role: UserRole): NavData{
+export function getNavData(role: UserRole){
   switch (role) {
     case "Donors":
       return{
