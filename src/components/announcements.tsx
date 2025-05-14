@@ -162,10 +162,10 @@ export default function Announcements() {
 
   const [currentUser, setUser] = useState<any | null>(null);
   const [announcements, setAnnouncements] = useState<any[]>([]);
-  // const BACKEND_HOST = process.env.NEXT_PUBLIC_BACKEND_HOST;
-  const BACKEND_HOST =
-    "https://carebite-backend-dsgqf7fceqc0gmcw.canadacentral-01.azurewebsites.net";
-    // "http://localhost:5000"
+  const BACKEND_HOST = process.env.NEXT_PUBLIC_BACKEND_HOST;
+  // const BACKEND_HOST =
+    // "https://carebite-backend-dsgqf7fceqc0gmcw.canadacentral-01.azurewebsites.net";
+    // "http://localhost:5000";
 
   useEffect(() => {
     const savedUser = localStorage.getItem("user");
@@ -234,6 +234,60 @@ export default function Announcements() {
         }
 
         setAnnouncements(formatted);
+      } else if (role === "General Manager Hospital") {
+        const res = await fetch(
+          `${BACKEND_HOST}/api/gmh/announcements/${currentUser.id}`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        const data = await res.json();
+        // console.log("API response:", data);
+        if (!res.ok) throw new Error(data.message || "Failed to fetch");
+
+        // Assuming API returns [{ date_added, title, details }]
+        let formatted: any = [];
+        if (data) {
+          formatted = data.map((item: any, index: number) => ({
+            id: item.id || index,
+            title: item.title,
+            date: item.date_added,
+            category: "information", // API doesn’t return category
+            content: `<p>${item.details}</p>`, // Wrap in <p> for consistency
+          }));
+        }
+
+        setAnnouncements(formatted);
+      } else if (role === "General Manager Coordinator") {
+        const res = await fetch(
+          `${BACKEND_HOST}/api/gmc/announcements/${currentUser.id}`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        const data = await res.json();
+        // console.log("API response:", data);
+        if (!res.ok) throw new Error(data.message || "Failed to fetch");
+
+        // Assuming API returns [{ date_added, title, details }]
+        let formatted: any = [];
+        if (data) {
+          formatted = data.map((item: any, index: number) => ({
+            id: item.id || index,
+            title: item.title,
+            date: item.date_added,
+            category: "information", // API doesn’t return category
+            content: `<p>${item.details}</p>`, // Wrap in <p> for consistency
+          }));
+        }
+
+        setAnnouncements(formatted);
       }
     } catch (err) {
       console.error("Error fetching announcements:", err);
@@ -249,6 +303,9 @@ export default function Announcements() {
       getAnnouncements(role);
     } else if (currentUser.role === "Supervisor") {
       role = "Supervisor";
+      getAnnouncements(role);
+    } else if (currentUser.role === "General Manager Hospital") {
+      role = "General Manager Hospital";
       getAnnouncements(role);
     }
 
@@ -345,9 +402,9 @@ export default function Announcements() {
                         </TableRow>
                       </TableHeader>
                       <TableBody>
-                        {announcements.map((announcement) => (
+                        {announcements.map((announcement, index) => (
                           <TableRow
-                            key={announcement.id}
+                            key={index}
                             className="cursor-pointer hover:bg-muted/50"
                           >
                             <TableCell

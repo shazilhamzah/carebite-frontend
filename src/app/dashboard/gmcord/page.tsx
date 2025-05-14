@@ -19,6 +19,7 @@ import Reviews from "@/components/reviews";
 import MoneyTransfers from "@/components/money-transfers";
 import PersonnelManagement from "@/components/personnel-management";
 import Attendance from "@/components/attendance";
+import UtensilRequests from "@/components//gmcRequests";
 
 export default function GMCoordinatorDashboard() {
   const router = useRouter();
@@ -49,15 +50,10 @@ export default function GMCoordinatorDashboard() {
       <SidebarInset>
         <SiteHeader />
         {userTab === "Personal Information" && <PersonalInformation />}
-        {userTab === "Requests" && <Requests />}
-        {userTab === "Money Transfers" && <MoneyTransfers />}
-        {userTab === "Hospitals Information" && <HospitalsInformation />}
-        {userTab === "Personnel Management" && <PersonnelManagement />}
-        {userTab === "Reviews" && <Reviews />}
-        {userTab === "Funds Status" && <FundsStatus />}
-        {userTab === "Salary" && <Salary />}
-        {userTab === "Attendance" && <Attendance />}
-        {userTab === "Announcements" && <Announcements />}
+        {userTab === "Utility Requests" && <UtensilRequests />}
+        {/* {userTab === "Salary" && <Salary />} */}
+        {/* {userTab === "Attendance" && <Attendance />} */}
+        {/* {userTab === "Announcements" && <Announcements />} */}
       </SidebarInset>
     </SidebarProvider>
   );

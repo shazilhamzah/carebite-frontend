@@ -22,8 +22,9 @@ export default function LoginPage() {
     const [password, setPassword] = useState("")
     const [error, setError] = useState("")
     const router = useRouter();
-    // const BACKEND_HOST = process.env.NEXT_PUBLIC_BACKEND_HOST;
-    const BACKEND_HOST = "https://carebite-backend-dsgqf7fceqc0gmcw.canadacentral-01.azurewebsites.net";
+    const BACKEND_HOST = process.env.NEXT_PUBLIC_BACKEND_HOST;
+    // const BACKEND_HOST = "https://carebite-backend-dsgqf7fceqc0gmcw.canadacentral-01.azurewebsites.net";
+    // const BACKEND_HOST = "http://localhost:5000";
     const handleLogin = async (e) => {
         console.log(BACKEND_HOST);
         e.preventDefault()

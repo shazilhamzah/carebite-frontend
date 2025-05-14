@@ -67,13 +67,13 @@ export function getNavData(role: UserRole) {
       return {
         navMain: [
           { title: "Personal Information", url: "#", icon: PersonStanding },
-          { title: "Reviews", url: "#", icon: IconDevicesCheck },
-          { title: "Requests", url: "#", icon: IconUserQuestion},
-          { title: "Hospitals Information", url: "#", icon:  Hospital },
-          { title: "Funds Status", url: "#", icon: IconAdjustmentsDollar },
-          { title: "Attendance", url: "#", icon: IconCalendarWeek},
-          { title: "Salary", url: "#", icon: Coins  },
-          { title: "Announcements", url: "#", icon: IconSpeakerphone },
+          // { title: "Reviews", url: "#", icon: IconDevicesCheck },
+          { title: "Utility Requests", url: "#", icon: IconUserQuestion},
+          // { title: "Hospitals Information", url: "#", icon:  Hospital },
+          // { title: "Funds Status", url: "#", icon: IconAdjustmentsDollar },
+          // { title: "Attendance", url: "#", icon: IconCalenda rWeek},
+          // { title: "Salary", url: "#", icon: Coins  },
+          // { title: "Announcements", url: "#", icon: IconSpeakerphone },
         ],
         documents: [],
         navSecondary: [],
@@ -116,8 +116,8 @@ export function getNavData(role: UserRole) {
       return {
         navMain: [
           { title: "Personal Information", url: "#", icon: PersonStanding },
-          { title: "Hospital Information", url: "#", icon:  Hospital  },
-          { title: "Reviews", url: "#", icon: IconDevicesCheck },
+          // { title: "Hospital Information", url: "#", icon:  Hospital  },
+          // { title: "Reviews", url: "#", icon: IconDevicesCheck },
           { title: "Requests", url: "#", icon: IconUserQuestion},
           { title: "Attendance", url: "#", icon: IconCalendarWeek},
           { title: "Salary", url: "#", icon: Coins  },

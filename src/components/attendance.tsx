@@ -288,7 +288,8 @@ export default function Attendance() {
   const [attendance, setAttendance] = useState<any[]>([]);
 
   const BACKEND_HOST =
-    "https://carebite-backend-dsgqf7fceqc0gmcw.canadacentral-01.azurewebsites.net";
+    // "https://carebite-backend-dsgqf7fceqc0gmcw.canadacentral-01.azurewebsites.net";
+    "http://localhost:5000";
 
   useEffect(() => {
     const savedUser = localStorage.getItem("user");
@@ -306,6 +307,28 @@ export default function Attendance() {
           const res = await fetch(
             `${BACKEND_HOST}/api/worker/attendance/${currentUser.id}`
           );
+          const data = await res.json();
+          console.log(data);
+
+          if (!res.ok)
+            throw new Error(data.message || "Failed to fetch attendance");
+
+          // Format data and add day field
+          const formatted = data.map((item: any) => ({
+            date: item.curr_date,
+            day: new Date(item.curr_date).toLocaleDateString("en-US", {
+              weekday: "long",
+            }),
+            status: item.status.toLowerCase(), // Convert to lowercase for consistency
+          }));
+
+          setAttendance(formatted);
+        }
+        if (currentUser.role == "Supervisor") {
+          const res = await fetch(
+            `${BACKEND_HOST}/api/sup/attendance/${currentUser.id}`
+          );
+          console.log(res);
           const data = await res.json();
           console.log(data);
 

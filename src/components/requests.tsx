@@ -1,206 +1,319 @@
-"use client"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { CheckCircle2, Clock, XCircle } from "lucide-react"
+"use client";
+import { useEffect, useState } from "react";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { CheckCircle2, Clock, Plus } from "lucide-react";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+  DialogFooter,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
-export default function Requests() {
-  // Sample requests data
-  const requests = [
-    {
-      id: 1,
-      title: "Additional Medical Supplies",
-      description: "Request for additional medical supplies for the pediatric ward.",
-      requester: "Dr. Sarah Johnson",
-      department: "Pediatrics",
-      date: "April 20, 2023",
-      status: "Pending",
-      priority: "High",
-    },
-    {
-      id: 2,
-      title: "Food Budget Increase",
-      description: "Request to increase the monthly food budget due to rising costs.",
-      requester: "James Wilson",
-      department: "Nutrition",
-      date: "April 18, 2023",
-      status: "Approved",
-      priority: "Medium",
-    },
-    {
-      id: 3,
-      title: "New Staff Hiring",
-      description: "Request to hire two additional nurses for the emergency department.",
-      requester: "Dr. Michael Chen",
-      department: "Emergency",
-      date: "April 15, 2023",
-      status: "Rejected",
-      priority: "High",
-    },
-    {
-      id: 4,
-      title: "Equipment Maintenance",
-      description: "Request for maintenance of X-ray machines in the radiology department.",
-      requester: "Dr. Emily Rodriguez",
-      department: "Radiology",
-      date: "April 12, 2023",
-      status: "Approved",
-      priority: "Medium",
-    },
-    {
-      id: 5,
-      title: "Training Program",
-      description: "Request for budget allocation for staff training program.",
-      requester: "Lisa Thompson",
-      department: "HR",
-      date: "April 10, 2023",
-      status: "Pending",
-      priority: "Low",
-    },
-  ]
+export default function UtensilRequests() {
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [selectedUtensil, setSelectedUtensil] = useState("");
+  const [quantity, setQuantity] = useState("1");
+  const [requests, setRequests] = useState<UtensilRequest[]>([]);
+
+  const [currentUser, setUser] = useState<any | null>(null);
+  const [userType, setUserType] = useState<any | null>(null);
+
+  // const supervisorId = 1; // Replace with actual logged-in supervisor's ID
+  type UtensilRequest = {
+    utensil_request_id: number;
+    quantity_requested: number;
+    status_sent: string;
+    status_recieved: string;
+    utensils: {
+      name: string;
+    };
+  };
+
+  const utensils = [
+    { id: 1, name: "Fork" },
+    { id: 2, name: "Spoon" },
+    { id: 3, name: "Knife" },
+    { id: 4, name: "Plate" },
+    { id: 5, name: "Bowl" },
+    { id: 6, name: "Cup" },
+    { id: 7, name: "Glass" },
+    { id: 8, name: "Chopsticks" },
+    { id: 9, name: "Whisk" },
+    { id: 10, name: "Tongs" },
+    { id: 11, name: "Ladle" },
+    { id: 12, name: "Rolling Pin" },
+    { id: 13, name: "Measuring Cup" },
+    { id: 14, name: "Grater" },
+    { id: 15, name: "Peeler" },
+    { id: 16, name: "Spatula" },
+    { id: 17, name: "Colander" },
+    { id: 18, name: "Cutting Board" },
+    { id: 19, name: "Can Opener" },
+    { id: 20, name: "Strainer" },
+  ];
+
+  useEffect(() => {
+    const savedUser = localStorage.getItem("user");
+    if (savedUser) {
+      const parsedUser = JSON.parse(savedUser);
+      setUser(parsedUser);
+      if (parsedUser.role === "Supervisor") {
+        setUserType("sup");
+      } else if (parsedUser.role === "Worker") {
+        setUserType("worker");
+      }
+      console.log(parsedUser);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (currentUser && userType) {
+      getRequests();
+    }
+  }, [currentUser, userType]);
+
+  const getRequests = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:5000/api/${userType}/requested/${currentUser.id}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const result = await response.json();
+      console.log(result);
+      setRequests(result);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleSubmitRequest = async () => {
+    const selectedUtensilObj = utensils.find(
+      (u) => u.id.toString() === selectedUtensil
+    );
+    if (!selectedUtensilObj) return;
+
+    const newRequest = {
+      utensil_request_id: parseInt(selectedUtensil),
+      hospital_id: currentUser.hospital_id,
+      quantity_requested: parseInt(quantity),
+      status_sent: "Yes",
+      status_recieved: "No",
+    };
+
+    try {
+      const list = {
+        list: newRequest,
+      };
+      console.log(list);
+      const response = await fetch(
+        `http://localhost:5000/api/${userType}/genreq/${currentUser.id}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            list: [newRequest],
+          }),
+        }
+      );
+
+      if (response.ok) {
+        setRequests((prev: UtensilRequest[]) => [
+          ...prev,
+          {
+            utensil_request_id: newRequest.utensil_request_id,
+            quantity_requested: newRequest.quantity_requested,
+            status_sent: "Yes",
+            status_recieved: "No",
+            utensils: {
+              name: selectedUtensilObj.name,
+            },
+          },
+        ]);
+
+        setIsDialogOpen(false);
+        setSelectedUtensil("");
+        setQuantity("1");
+        getRequests();
+      } else {
+        console.error("Request failed");
+      }
+    } catch (err) {
+      console.error("Error submitting request:", err);
+    }
+  };
 
   return (
-    <div className="container mx-auto p-6">
-      <Tabs defaultValue="all" className="space-y-6">
+    <div className="container mx-auto p-4">
+      <Tabs defaultValue="all" className="space-y-4">
         <div className="flex items-center justify-between">
           <TabsList>
             <TabsTrigger value="all">All Requests</TabsTrigger>
             <TabsTrigger value="pending">Pending</TabsTrigger>
             <TabsTrigger value="approved">Approved</TabsTrigger>
-            <TabsTrigger value="rejected">Rejected</TabsTrigger>
           </TabsList>
-          <Button>New Request</Button>
+          <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+            <DialogTrigger asChild>
+              <Button>
+                <Plus className="h-4 w-4 mr-2" />
+                New Request
+              </Button>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Request Utensils</DialogTitle>
+              </DialogHeader>
+              <div className="grid gap-4 py-4">
+                <div className="grid gap-2">
+                  <Label htmlFor="utensil">Utensil</Label>
+                  <Select
+                    value={selectedUtensil}
+                    onValueChange={setSelectedUtensil}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select utensil" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {utensils.map((u) => (
+                        <SelectItem key={u.id} value={u.id.toString()}>
+                          {u.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="grid gap-2">
+                  <Label htmlFor="quantity">Quantity</Label>
+                  <Input
+                    id="quantity"
+                    type="number"
+                    min="1"
+                    value={quantity}
+                    onChange={(e) => setQuantity(e.target.value)}
+                  />
+                </div>
+              </div>
+              <DialogFooter>
+                <Button onClick={handleSubmitRequest}>Submit Request</Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
         </div>
 
-        <TabsContent value="all" className="space-y-4">
-          {requests.map((request) => (
-            <RequestCard key={request.id} request={request} />
-          ))}
-        </TabsContent>
-
-        <TabsContent value="pending" className="space-y-4">
-          {requests
-            .filter((r) => r.status === "Pending")
-            .map((request) => (
-              <RequestCard key={request.id} request={request} />
+        <TabsContent value="all" className="space-y-3">
+          {Array.isArray(requests) &&
+            requests.map((request, index) => (
+              <UtensilRequestCard
+                key={index}
+                request={request}
+              />
             ))}
         </TabsContent>
 
-        <TabsContent value="approved" className="space-y-4">
-          {requests
-            .filter((r) => r.status === "Approved")
-            .map((request) => (
-              <RequestCard key={request.id} request={request} />
-            ))}
+        <TabsContent value="pending" className="space-y-3">
+          {Array.isArray(requests) &&
+            requests
+              .filter((r) => r.status_recieved === "No")
+              .map((request, index) => (
+                <UtensilRequestCard
+                  key={index}
+                  request={request}
+                />
+              ))}
         </TabsContent>
 
-        <TabsContent value="rejected" className="space-y-4">
-          {requests
-            .filter((r) => r.status === "Rejected")
-            .map((request) => (
-              <RequestCard key={request.id} request={request} />
-            ))}
+        <TabsContent value="approved" className="space-y-3">
+          {Array.isArray(requests) &&
+            requests
+              .filter((r) => r.status_recieved === "Yes")
+              .map((request,index) => (
+                <UtensilRequestCard key={index} request={request} />
+              ))}
         </TabsContent>
       </Tabs>
+
     </div>
-  )
+  );
 }
 
-interface RequestCardProps {
+interface UtensilRequestCardProps {
   request: {
-    id: number
-    title: string
-    description: string
-    requester: string
-    department: string
-    date: string
-    status: string
-    priority: string
-  }
+    utensil_request_id: number;
+    quantity_requested: number;
+    status_sent: string;
+    status_recieved: string;
+    utensils: {
+      name: string;
+    };
+  };
 }
-
-function RequestCard({ request }: RequestCardProps) {
-  const getStatusIcon = (status: string) => {
-    switch (status) {
-      case "Approved":
-        return <CheckCircle2 className="h-5 w-5 text-green-600" />
-      case "Rejected":
-        return <XCircle className="h-5 w-5 text-red-600" />
-      default:
-        return <Clock className="h-5 w-5 text-amber-600" />
+function UtensilRequestCard({ request }: UtensilRequestCardProps) {
+  const getStatusIcon = () => {
+    if (request.status_recieved === "Yes") {
+      return <CheckCircle2 className="h-5 w-5 text-green-600" />;
+    } else {
+      return <Clock className="h-5 w-5 text-amber-600" />;
     }
-  }
+  };
 
-  const getStatusBadge = (status: string) => {
-    switch (status) {
-      case "Approved":
-        return <Badge className="bg-green-100 text-green-800">Approved</Badge>
-      case "Rejected":
-        return <Badge className="bg-red-100 text-red-800">Rejected</Badge>
-      default:
-        return <Badge className="bg-amber-100 text-amber-800">Pending</Badge>
+  const getStatusBadge = () => {
+    if (request.status_recieved === "Yes") {
+      return <Badge className="bg-green-100 text-green-800">Received</Badge>;
+    } else {
+      return <Badge className="bg-amber-100 text-amber-800">Pending</Badge>;
     }
-  }
-
-  const getPriorityBadge = (priority: string) => {
-    switch (priority) {
-      case "High":
-        return (
-          <Badge variant="outline" className="border-red-200 text-red-800">
-            High
-          </Badge>
-        )
-      case "Medium":
-        return (
-          <Badge variant="outline" className="border-amber-200 text-amber-800">
-            Medium
-          </Badge>
-        )
-      default:
-        return (
-          <Badge variant="outline" className="border-blue-200 text-blue-800">
-            Low
-          </Badge>
-        )
-    }
-  }
+  };
 
   return (
     <Card>
       <CardHeader className="pb-2">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-2">
-            {getStatusIcon(request.status)}
-            <CardTitle className="text-lg">{request.title}</CardTitle>
+            {getStatusIcon()}
+            <CardTitle className="text-lg">
+              {request.utensils?.name || "Unknown Utensil"}
+            </CardTitle>
           </div>
           <div className="flex items-center space-x-2">
-            {getPriorityBadge(request.priority)}
-            {getStatusBadge(request.status)}
+            <Badge variant="outline" className="border-blue-200 text-blue-800">
+              Qty: {request.quantity_requested}
+            </Badge>
+            {getStatusBadge()}
           </div>
         </div>
-        <CardDescription className="pt-1">
-          Requested by {request.requester} • {request.department} • {request.date}
-        </CardDescription>
       </CardHeader>
       <CardContent>
-        <p className="text-sm text-muted-foreground">{request.description}</p>
+        <p className="text-sm text-muted-foreground">
+          Request for {request.quantity_requested}{" "}
+          {request.utensils?.name?.toLowerCase() ?? "utensils"}
+        </p>
       </CardContent>
-      <CardFooter className="flex justify-between">
-        <Button variant="outline" size="sm">
-          View Details
-        </Button>
-        {request.status === "Pending" && (
-          <div className="flex space-x-2">
-            <Button variant="outline" size="sm" className="text-red-600">
-              Reject
-            </Button>
-            <Button size="sm" className="bg-green-600 hover:bg-green-700">
-              Approve
-            </Button>
-          </div>
-        )}
-      </CardFooter>
     </Card>
-  )
+  );
 }

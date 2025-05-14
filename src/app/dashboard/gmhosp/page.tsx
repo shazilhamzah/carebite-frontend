@@ -19,6 +19,7 @@ import Menu from "@/components/ui/menu";
 import FoodStatus from "@/components/food-status";
 import Salary from "@/components/salary";
 import AttendancePageGMHosp from "@/components/attendance-page-gmhosp";
+import GMHAnnouncements from "@/components/gmhAnnouncements";
 
 export default function GMHospitalDashboard() {
   const router = useRouter();
@@ -46,14 +47,10 @@ export default function GMHospitalDashboard() {
       <SidebarInset>
         <SiteHeader />
         {userTab === "Personal Information" && <PersonalInformation />}
-        {/* {userTab === "Hospital Information" && <HospitalInformation />} */}
-        {/* {userTab === "Personnel Management" && <PersonnelManagement />} */}
         {userTab === "Attendance" && <AttendancePageGMHosp />}
-        {/* {userTab === "Reviews" && <Reviews />} */}
         {userTab === "Menu" && <Menu />}
-        {/* {userTab === "Food Status" && <FoodStatus />} */}
         {userTab === "Salary" && <Salary />}
-        {userTab === "Announcements" && <Announcements />}
+        {userTab === "Announcements" && <GMHAnnouncements />}
       </SidebarInset>
     </SidebarProvider>
   );

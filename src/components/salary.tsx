@@ -1,81 +1,323 @@
+// "use client";
+
+// import type React from "react";
+
+// import { useState } from "react";
+// import { Badge } from "@/components/ui/badge";
+// import { Card, CardHeader, CardTitle } from "@/components/ui/card";
+// import { Button } from "@/components/ui/button";
+// import {
+//   DollarSignIcon,
+//   PiggyBankIcon,
+//   TrendingUpIcon,
+//   WalletIcon,
+//   CheckCircle,
+//   XCircle,
+//   Save,
+// } from "lucide-react";
+
+// // Sample salary data - in a real app, this would come from an API or database
+// const currentMonth = "April 2023";
+// const salaryData = {
+//   monthlySalary: 5800,
+//   totalSalaryReceived: 24440,
+//   totalBonusReceived: 3500,
+//   paymentDate: "April 30, 2023",
+// };
+
+// export default function Salary() {
+//   const [isConfirmed, setIsConfirmed] = useState<boolean | null>(null);
+
+//   const handleConfirm = (received: boolean) => {
+//     setIsConfirmed(received);
+//   };
+
+//   const save = ()=>{
+//     //
+//   }
+
+//   return (
+//     <div className="flex flex-1 flex-col">
+//       <div className="@container/main flex flex-1 flex-col gap-2">
+//         <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
+//           <div className="px-4 lg:px-6">
+//             <Card className="overflow-hidden">
+//               <CardHeader className="bg-primary/5 pb-6 pt-6">
+//                 <div className="flex flex-col space-y-4">
+//                   <div className="flex items-center justify-between">
+//                     <CardTitle className="  flex items-center gap-2">
+//                       <WalletIcon className="h-5 w-5 text-primary" />
+//                       Salary Information
+//                     </CardTitle>
+//                     <Badge
+//                       variant="outline"
+//                       className="text-primary px-2.5 py-1"
+//                     >
+//                       {currentMonth}
+//                     </Badge>
+//                   </div>
+
+//                   {/* Salary Sent Notification */}
+//                   <div className="p-4 bg-green-50 rounded-lg border border-green-100">
+//                     <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+//                       <div>
+//                         <h3 className="font-bold text-lg text-green-800">
+//                           Your salary for {currentMonth} has been sent
+//                         </h3>
+//                         <p className="text-sm text-green-600">
+//                           Payment date: {salaryData.paymentDate}
+//                         </p>
+//                       </div>
+//                       <div className="flex gap-3">
+//                         <Button
+//                           variant={isConfirmed === true ? "default" : "outline"}
+//                           className={
+//                             isConfirmed === true
+//                               ? "bg-green-600 hover:bg-green-700"
+//                               : ""
+//                           }
+//                           onClick={() => handleConfirm(true)}
+//                         >
+//                           <CheckCircle className="mr-2 h-4 w-4" />
+//                           Received
+//                         </Button>
+//                         <Button
+//                           variant={
+//                             isConfirmed === false ? "default" : "outline"
+//                           }
+//                           className={
+//                             isConfirmed === false
+//                               ? "bg-red-600 hover:bg-red-700"
+//                               : ""
+//                           }
+//                           onClick={() => handleConfirm(false)}
+//                         >
+//                           <XCircle className="mr-2 h-4 w-4" />
+//                           Not Received
+//                         </Button>
+//                         <Button
+//                           variant={
+//                             "default"
+//                           }
+//                           // className={
+//                           //   isConfirmed === false
+//                           //     ? "bg-red-600 hover:bg-red-700"
+//                           //     : ""
+//                           // }
+//                           onClick={() => save}
+//                         >
+//                           {/* <XCircle className="mr-2 h-4 w-4" /> */}
+//                           <Save/>
+//                           Save
+//                         </Button>
+//                       </div>
+//                     </div>
+//                   </div>
+
+//                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+//                     <SalaryCard
+//                       title="Monthly Salary"
+//                       amount={salaryData.monthlySalary}
+//                       icon={
+//                         <DollarSignIcon className="h-5 w-5 text-green-500" />
+//                       }
+//                       bgColor="bg-green-50"
+//                       textColor="text-green-700"
+//                     />
+//                     <SalaryCard
+//                       title="Total Salary Received"
+//                       amount={salaryData.totalSalaryReceived}
+//                       icon={
+//                         <PiggyBankIcon className="h-5 w-5 text-purple-500" />
+//                       }
+//                       bgColor="bg-purple-50"
+//                       textColor="text-purple-700"
+//                     />
+//                     <SalaryCard
+//                       title="Total Bonus Received"
+//                       amount={salaryData.totalBonusReceived}
+//                       icon={
+//                         <TrendingUpIcon className="h-5 w-5 text-blue-500" />
+//                       }
+//                       bgColor="bg-blue-50"
+//                       textColor="text-blue-700"
+//                     />
+//                   </div>
+//                 </div>
+//               </CardHeader>
+//             </Card>
+//           </div>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// }
+
+// interface SalaryCardProps {
+//   title: string;
+//   amount: number;
+//   icon: React.ReactNode;
+//   bgColor: string;
+//   textColor: string;
+// }
+
+// function SalaryCard({
+//   title,
+//   amount,
+//   icon,
+//   bgColor,
+//   textColor,
+// }: SalaryCardProps) {
+//   return (
+//     <div className={`rounded-lg border p-4 ${bgColor}`}>
+//       <div className="flex justify-between items-start">
+//         <div className={`rounded-full p-2 ${bgColor}`}>{icon}</div>
+//       </div>
+//       <div className="mt-2">
+//         <p className="text-sm font-medium text-muted-foreground">{title}</p>
+//         <p className={`text-2xl font-bold mt-1 ${textColor}`}>
+//           ${amount.toLocaleString()}
+//         </p>
+//       </div>
+//     </div>
+//   );
+// }
+
 "use client";
 
-import type React from "react";
-
+import React, { useEffect, useState } from "react";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Card, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import {
-  BanknoteIcon,
-  CalendarIcon,
-  CreditCardIcon,
   DollarSignIcon,
   PiggyBankIcon,
   TrendingUpIcon,
   WalletIcon,
-  ArrowUpIcon,
-  ArrowDownIcon,
+  CheckCircle,
+  XCircle,
+  Save,
 } from "lucide-react";
 
-// Sample salary data - in a real app, this would come from an API or database
+// 👇 Replace this with the actual supervisor ID (you might fetch it from context/auth)
+// const SUPERVISOR_ID = 1;
+
 const currentMonth = "April 2023";
+
 const salaryData = {
-  baseSalary: 5800,
-  allowances: 1200,
-  overtime: 450,
-  bonus: 1500,
-  grossSalary: 8950,
-  deductions: {
-    tax: 1790,
-    insurance: 350,
-    retirement: 580,
-    other: 120,
-    total: 2840,
-  },
-  netSalary: 6110,
-  received: 4500,
-  pending: 1610,
+  monthlySalary: 5800,
+  totalSalaryReceived: 24440,
+  totalBonusReceived: 3500,
   paymentDate: "April 30, 2023",
-  ytdEarnings: 24440,
-  ytdTax: 4888,
 };
 
-const recentPayments = [
-  { month: "March 2023", amount: 5980, status: "paid", date: "March 31, 2023" },
-  {
-    month: "February 2023",
-    amount: 6240,
-    status: "paid",
-    date: "February 28, 2023",
-  },
-  {
-    month: "January 2023",
-    amount: 6110,
-    status: "paid",
-    date: "January 31, 2023",
-  },
-  {
-    month: "December 2022",
-    amount: 7200,
-    status: "paid",
-    date: "December 31, 2022",
-  },
-];
-
 export default function Salary() {
-  // Calculate percentage of salary received
-  const receivedPercentage = Math.round(
-    (salaryData.received / salaryData.netSalary) * 100
-  );
+  const [isConfirmed, setIsConfirmed] = useState<boolean | null>(null);
+  const [isSaving, setIsSaving] = useState(false);
+  const [currentUser, setUser] = useState<any | null>(null);
+  const [userType, setUserType] = useState<any | null>(null);
+  const [isSalaryHere, setIsSalaryHere] = useState<boolean | null>(null);
+  const [bonus, setBonus] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    const savedUser = localStorage.getItem("user");
+    if (savedUser) {
+      const parsedUser = JSON.parse(savedUser);
+      setUser(parsedUser);
+
+      if (parsedUser.role === "Supervisor") {
+        setUserType("sup");
+      } else if (parsedUser.role === "Worker") {
+        setUserType("worker");
+      } else if (parsedUser.role === "General Manager Hospital") {
+        setUserType("gmh");
+      } else if (parsedUser.role === "General Manager Coordinator") {
+        setUserType("gmc");
+      }
+
+      console.log(parsedUser);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (currentUser) {
+      getSalary();
+    }
+  }, [currentUser, userType]);
+
+  const handleConfirm = (received: boolean) => {
+    setIsConfirmed(received);
+  };
+
+  const getSalary = async () => {
+    try {
+      const res = await fetch(
+        `http://localhost:5000/api/${userType}/salary/${currentUser.id}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      console.log("I am here");
+      const result = await res.json();
+      console.log(result);
+      if (result.sent_status == "Yes" && result.receive_status == "No") {
+        console.log("Salary toogled to true!");
+        setIsSalaryHere(true);
+      } else {
+        setIsSalaryHere(false);
+        console.log("Salary toogled to false!");
+      }
+      if (result.bonus == "No") {
+        setBonus(false);
+      } else {
+        setBonus(true);
+      }
+    } catch (error) {
+      setIsSalaryHere(false);
+      console.error(error);
+    }
+  };
+
+  const save = async () => {
+    if (isConfirmed === null) {
+      alert("Please confirm if you received the salary.");
+      return;
+    }
+
+    setIsSaving(true);
+    try {
+      const res = await fetch(
+        `http://localhost:5000/api/${userType}/salary/${currentUser.id}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            receive_status: isConfirmed ? "Yes" : "No",
+            sent_status: "Yes",
+          }),
+        }
+      );
+
+      const result = await res.json();
+
+      if (res.ok) {
+        alert("Salary status updated successfully.");
+      } else {
+        console.error(result);
+        alert("Error updating salary status.");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Failed to connect to the server.");
+    } finally {
+      setIsSaving(false);
+    }
+  };
 
   return (
     <div className="flex flex-1 flex-col">
@@ -88,274 +330,117 @@ export default function Salary() {
                   <div className="flex items-center justify-between">
                     <CardTitle className="flex items-center gap-2">
                       <WalletIcon className="h-5 w-5 text-primary" />
-                      Salary & Compensation
+                      Salary Information
                     </CardTitle>
                     <Badge
                       variant="outline"
-                      className="bg-primary/10 text-primary px-2.5 py-1"
+                      className="text-primary px-2.5 py-1"
                     >
                       {currentMonth}
                     </Badge>
                   </div>
+                  {/* IF SALARY IS HERE AND WE NEED TO CONFIRM */}
+                  {
+                    isSalaryHere ? (
+                      <div className="p-4 bg-green-50 rounded-lg border border-green-100">
+                        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                          <div>
+                            <h3 className="font-bold text-lg text-green-800">
+                              Your salary for {currentMonth} has been sent
+                            </h3>
+                            <p className="text-sm text-green-600">
+                              Payment date: {salaryData.paymentDate}
+                            </p>
+                          </div>
+                          <div className="flex gap-3">
+                            <Button
+                              variant={
+                                isConfirmed === true ? "default" : "outline"
+                              }
+                              className={
+                                isConfirmed === true
+                                  ? "bg-green-600 hover:bg-green-700"
+                                  : ""
+                              }
+                              onClick={() => handleConfirm(true)}
+                            >
+                              <CheckCircle className="mr-2 h-4 w-4" />
+                              Received
+                            </Button>
+                            <Button
+                              variant={
+                                isConfirmed === false ? "default" : "outline"
+                              }
+                              className={
+                                isConfirmed === false
+                                  ? "bg-red-600 hover:bg-red-700"
+                                  : ""
+                              }
+                              onClick={() => handleConfirm(false)}
+                            >
+                              <XCircle className="mr-2 h-4 w-4" />
+                              Not Received
+                            </Button>
+                            <Button
+                              variant="default"
+                              onClick={save}
+                              disabled={isSaving}
+                            >
+                              <Save className="mr-2 h-4 w-4" />
+                              {isSaving ? "Saving..." : "Save"}
+                            </Button>
+                          </div>
+                        </div>
+                      </div>
+                    ) : (
+                      <div>No salary info for available!</div>
+                    )
+                    // IF SALARY IS NOT HERE
+                    // <div className="p-4 bg-green-50 rounded-lg border border-green-100">
+                    //   <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                    //     <div>
+                    //       <h3 className="font-bold text-lg text-green-800">
+                    //         Your salary for {currentMonth} has been sent
+                    //       </h3>
+                    //       <p className="text-sm text-green-600">
+                    //         Payment date: {salaryData.paymentDate}
+                    //       </p>
+                    //     </div>
+                    //   </div>
+                    // </div>
+                  }
 
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  {/* <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <SalaryCard
-                      title="Net Salary"
-                      amount={salaryData.netSalary}
+                      title="Monthly Salary"
+                      amount={salaryData.monthlySalary}
                       icon={
                         <DollarSignIcon className="h-5 w-5 text-green-500" />
                       }
-                      trend={<ArrowUpIcon className="h-4 w-4 text-green-500" />}
-                      trendText="+2.5% from last month"
                       bgColor="bg-green-50"
                       textColor="text-green-700"
                     />
                     <SalaryCard
-                      title="Bonus"
-                      amount={salaryData.bonus}
-                      icon={
-                        <TrendingUpIcon className="h-5 w-5 text-blue-500" />
-                      }
-                      trend={<ArrowUpIcon className="h-4 w-4 text-blue-500" />}
-                      trendText="Performance bonus"
-                      bgColor="bg-blue-50"
-                      textColor="text-blue-700"
-                    />
-                    <SalaryCard
-                      title="YTD Earnings"
-                      amount={salaryData.ytdEarnings}
+                      title="Total Salary Received"
+                      amount={salaryData.totalSalaryReceived}
                       icon={
                         <PiggyBankIcon className="h-5 w-5 text-purple-500" />
                       }
                       bgColor="bg-purple-50"
                       textColor="text-purple-700"
                     />
-                  </div>
-
-                  <div className="space-y-2">
-                    <div className="flex justify-between text-sm">
-                      <span>Payment Status</span>
-                      <span className="font-medium">
-                        ${salaryData.received} of ${salaryData.netSalary}{" "}
-                        received
-                      </span>
-                    </div>
-                    <Progress value={receivedPercentage} className="h-2" />
-                    <div className="flex justify-between text-xs text-muted-foreground">
-                      <span>
-                        Next payment: ${salaryData.pending} on{" "}
-                        {salaryData.paymentDate}
-                      </span>
-                      <span>{receivedPercentage}% received</span>
-                    </div>
-                  </div>
+                    <SalaryCard
+                      title="Total Bonus Received"
+                      amount={salaryData.totalBonusReceived}
+                      icon={
+                        <TrendingUpIcon className="h-5 w-5 text-blue-500" />
+                      }
+                      bgColor="bg-blue-50"
+                      textColor="text-blue-700"
+                    />
+                  </div> */}
                 </div>
               </CardHeader>
-
-              <CardContent className="p-0">
-                <Tabs defaultValue="breakdown" className="w-full">
-                  <div className="border-b">
-                    <TabsList className="mx-4 my-2">
-                      <TabsTrigger value="breakdown">
-                        Salary Breakdown
-                      </TabsTrigger>
-                      <TabsTrigger value="history">Payment History</TabsTrigger>
-                    </TabsList>
-                  </div>
-
-                  <TabsContent value="breakdown" className="p-4">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <div className="space-y-4">
-                        <h3 className="font-semibold text-lg flex items-center gap-2">
-                          <BanknoteIcon className="h-4 w-4 text-primary" />
-                          Earnings
-                        </h3>
-                        <Table>
-                          <TableBody>
-                            <TableRow>
-                              <TableCell className="font-medium">
-                                Base Salary
-                              </TableCell>
-                              <TableCell className="text-right">
-                                ${salaryData.baseSalary.toLocaleString()}
-                              </TableCell>
-                            </TableRow>
-                            <TableRow>
-                              <TableCell className="font-medium">
-                                Allowances
-                              </TableCell>
-                              <TableCell className="text-right">
-                                ${salaryData.allowances.toLocaleString()}
-                              </TableCell>
-                            </TableRow>
-                            <TableRow>
-                              <TableCell className="font-medium">
-                                Overtime
-                              </TableCell>
-                              <TableCell className="text-right">
-                                ${salaryData.overtime.toLocaleString()}
-                              </TableCell>
-                            </TableRow>
-                            <TableRow>
-                              <TableCell className="font-medium">
-                                Bonus
-                              </TableCell>
-                              <TableCell className="text-right">
-                                ${salaryData.bonus.toLocaleString()}
-                              </TableCell>
-                            </TableRow>
-                            <TableRow className="border-t-2">
-                              <TableCell className="font-bold">
-                                Gross Salary
-                              </TableCell>
-                              <TableCell className="text-right font-bold">
-                                ${salaryData.grossSalary.toLocaleString()}
-                              </TableCell>
-                            </TableRow>
-                          </TableBody>
-                        </Table>
-                      </div>
-
-                      <div className="space-y-4">
-                        <h3 className="font-semibold text-lg flex items-center gap-2">
-                          <ArrowDownIcon className="h-4 w-4 text-primary" />
-                          Deductions
-                        </h3>
-                        <Table>
-                          <TableBody>
-                            <TableRow>
-                              <TableCell className="font-medium">Tax</TableCell>
-                              <TableCell className="text-right">
-                                ${salaryData.deductions.tax.toLocaleString()}
-                              </TableCell>
-                            </TableRow>
-                            <TableRow>
-                              <TableCell className="font-medium">
-                                Insurance
-                              </TableCell>
-                              <TableCell className="text-right">
-                                $
-                                {salaryData.deductions.insurance.toLocaleString()}
-                              </TableCell>
-                            </TableRow>
-                            <TableRow>
-                              <TableCell className="font-medium">
-                                Retirement
-                              </TableCell>
-                              <TableCell className="text-right">
-                                $
-                                {salaryData.deductions.retirement.toLocaleString()}
-                              </TableCell>
-                            </TableRow>
-                            <TableRow>
-                              <TableCell className="font-medium">
-                                Other
-                              </TableCell>
-                              <TableCell className="text-right">
-                                ${salaryData.deductions.other.toLocaleString()}
-                              </TableCell>
-                            </TableRow>
-                            <TableRow className="border-t-2">
-                              <TableCell className="font-bold">
-                                Total Deductions
-                              </TableCell>
-                              <TableCell className="text-right font-bold">
-                                ${salaryData.deductions.total.toLocaleString()}
-                              </TableCell>
-                            </TableRow>
-                          </TableBody>
-                        </Table>
-                      </div>
-                    </div>
-
-                    <div className="mt-6 p-4 bg-primary/5 rounded-lg border">
-                      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                        <div>
-                          <h3 className="font-bold text-lg">Net Salary</h3>
-                          <p className="text-sm text-muted-foreground">
-                            After all deductions
-                          </p>
-                        </div>
-                        <div className="text-2xl font-bold text-primary">
-                          ${salaryData.netSalary.toLocaleString()}
-                        </div>
-                      </div>
-                    </div>
-                  </TabsContent>
-
-                  <TabsContent value="history" className="p-4">
-                    <div className="space-y-4">
-                      <h3 className="font-semibold text-lg flex items-center gap-2">
-                        <CalendarIcon className="h-4 w-4 text-primary" />
-                        Recent Payments
-                      </h3>
-                      <Table>
-                        <TableHeader>
-                          <TableRow>
-                            <TableHead>Month</TableHead>
-                            <TableHead>Amount</TableHead>
-                            <TableHead>Date</TableHead>
-                            <TableHead>Status</TableHead>
-                          </TableRow>
-                        </TableHeader>
-                        <TableBody>
-                          {recentPayments.map((payment, index) => (
-                            <TableRow key={index}>
-                              <TableCell className="font-medium">
-                                {payment.month}
-                              </TableCell>
-                              <TableCell>
-                                ${payment.amount.toLocaleString()}
-                              </TableCell>
-                              <TableCell>{payment.date}</TableCell>
-                              <TableCell>
-                                <Badge
-                                  variant="outline"
-                                  className="bg-green-50 text-green-600 border-green-200 flex w-20 items-center justify-center gap-1"
-                                >
-                                  <CreditCardIcon className="h-3 w-3" />
-                                  Paid
-                                </Badge>
-                              </TableCell>
-                            </TableRow>
-                          ))}
-                        </TableBody>
-                      </Table>
-
-                      <div className="mt-4 p-4 bg-blue-50 rounded-lg border border-blue-200">
-                        <div className="flex items-start gap-3">
-                          <div className="mt-0.5 flex h-8 w-8 items-center justify-center rounded-full bg-blue-100">
-                            <PiggyBankIcon className="h-4 w-4 text-blue-600" />
-                          </div>
-                          <div>
-                            <h4 className="font-semibold text-blue-800">
-                              Year-to-Date Summary
-                            </h4>
-                            <div className="mt-2 grid grid-cols-2 gap-4">
-                              <div>
-                                <p className="text-sm text-blue-600">
-                                  Total Earnings
-                                </p>
-                                <p className="font-bold text-blue-900">
-                                  ${salaryData.ytdEarnings.toLocaleString()}
-                                </p>
-                              </div>
-                              <div>
-                                <p className="text-sm text-blue-600">
-                                  Total Tax Paid
-                                </p>
-                                <p className="font-bold text-blue-900">
-                                  ${salaryData.ytdTax.toLocaleString()}
-                                </p>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </TabsContent>
-                </Tabs>
-              </CardContent>
             </Card>
           </div>
         </div>
@@ -368,8 +453,6 @@ interface SalaryCardProps {
   title: string;
   amount: number;
   icon: React.ReactNode;
-  trend?: React.ReactNode;
-  trendText?: string;
   bgColor: string;
   textColor: string;
 }
@@ -378,8 +461,6 @@ function SalaryCard({
   title,
   amount,
   icon,
-  trend,
-  trendText,
   bgColor,
   textColor,
 }: SalaryCardProps) {
@@ -387,16 +468,12 @@ function SalaryCard({
     <div className={`rounded-lg border p-4 ${bgColor}`}>
       <div className="flex justify-between items-start">
         <div className={`rounded-full p-2 ${bgColor}`}>{icon}</div>
-        {trend && <div>{trend}</div>}
       </div>
       <div className="mt-2">
         <p className="text-sm font-medium text-muted-foreground">{title}</p>
         <p className={`text-2xl font-bold mt-1 ${textColor}`}>
           ${amount.toLocaleString()}
         </p>
-        {trendText && (
-          <p className="text-xs mt-1 text-muted-foreground">{trendText}</p>
-        )}
       </div>
     </div>
   );

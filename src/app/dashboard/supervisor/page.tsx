@@ -43,8 +43,8 @@ export default function SupervisorDashboard() {
       <SidebarInset>
         <SiteHeader />
         {userTab === "Personal Information" && <PersonalInformation />}
-        {userTab === "Hospital Information" && <HospitalInformation />}
-        {userTab === "Reviews" && <Reviews />}
+        {/* {userTab === "Hospital Information" && <HospitalInformation />} */}
+        {/* {userTab === "Reviews" && <Reviews />} */}
         {userTab === "Requests" && <Requests />}
         {userTab === "Attendance" && <Attendance />}
         {userTab === "Salary" && <Salary />}
