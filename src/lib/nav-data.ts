@@ -26,9 +26,33 @@ import {
 import { IconShare } from "@tabler/icons-react"
 import { ChefHat, Coins, Hospital, PersonStanding } from "lucide-react";
 
+
+import type { LucideIcon } from "lucide-react"
+import type { Icon } from "@tabler/icons-react"
+
+type IconType = LucideIcon | Icon
+
+interface NavItem {
+  title: string
+  url: string
+  icon?: IconType
+}
+
+interface DocumentItem {
+  name: string
+  url: string
+  icon?: IconType
+}
+
+interface NavData {
+  navMain: NavItem[]
+  documents?: DocumentItem[]
+  navSecondary?: NavItem[]
+}
+
 export type UserRole = "worker" | "gmHosp" | "gmCord" | "GS" | "Donors" | "ADM" | "Supervisor" | "gm" | "etc.";
 
-export function getNavData(role: UserRole) {
+export function getNavData(role: UserRole): NavData{
   switch (role) {
     case "Donors":
       return{
